@@ -1,11 +1,183 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="Vista.VistaController">
+<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Vista.VistaController">
    <children>
-      <Pane layoutX="4.0" prefHeight="400.0" prefWidth="592.0" />
+      <Pane layoutY="293.0" prefHeight="100.0" prefWidth="593.0" style="-fx-background-color: #D3A468;" />
+      <Pane layoutY="64.0" prefHeight="286.0" prefWidth="593.0" style="-fx-background-color: #FAFAFA;">
+         <children>
+            <HBox layoutY="186.0" prefHeight="100.0" prefWidth="593.0">
+               <children>
+                  <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <children>
+                        <ImageView fitHeight="46.0" fitWidth="101.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Imagenes/Productos/imagen.jpg" />
+                           </image>
+                        </ImageView>
+                        <Label contentDisplay="RIGHT" text="Producto">
+                           <graphic>
+                              <ToggleButton mnemonicParsing="false" text="♡" />
+                           </graphic>
+                        </Label>
+                        <Label text="\$$$" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <children>
+                        <ImageView fitHeight="46.0" fitWidth="101.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Imagenes/Productos/imagen.jpg" />
+                           </image>
+                        </ImageView>
+                        <Label contentDisplay="RIGHT" text="Producto">
+                           <graphic>
+                              <ToggleButton mnemonicParsing="false" text="♡" />
+                           </graphic>
+                        </Label>
+                        <Label text="\$$$" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <children>
+                        <ImageView fitHeight="46.0" fitWidth="101.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Imagenes/Productos/imagen.jpg" />
+                           </image>
+                        </ImageView>
+                        <Label contentDisplay="RIGHT" text="Producto">
+                           <graphic>
+                              <ToggleButton mnemonicParsing="false" text="♡" />
+                           </graphic>
+                        </Label>
+                        <Label text="\$$$" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <children>
+                        <ImageView fitHeight="46.0" fitWidth="101.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Imagenes/Productos/imagen.jpg" />
+                           </image>
+                        </ImageView>
+                        <Label contentDisplay="RIGHT" text="Producto">
+                           <graphic>
+                              <ToggleButton mnemonicParsing="false" text="♡" />
+                           </graphic>
+                        </Label>
+                        <Label text="\$$$" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <children>
+                        <ImageView fitHeight="46.0" fitWidth="101.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Imagenes/Productos/imagen.jpg" />
+                           </image>
+                        </ImageView>
+                        <Label contentDisplay="RIGHT" text="Producto">
+                           <graphic>
+                              <ToggleButton mnemonicParsing="false" text="♡" />
+                           </graphic>
+                        </Label>
+                        <Label text="\$$$" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <children>
+                        <ImageView fitHeight="46.0" fitWidth="101.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Imagenes/Productos/imagen.jpg" />
+                           </image>
+                        </ImageView>
+                        <Label contentDisplay="RIGHT" text="Producto">
+                           <graphic>
+                              <ToggleButton mnemonicParsing="false" text="♡" />
+                           </graphic>
+                        </Label>
+                        <Label text="\$$$" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ed933a" height="28.0" stroke="#ed933a" strokeType="INSIDE" width="593.0" />
+            <Pane layoutX="14.0" layoutY="46.0" prefHeight="131.0" prefWidth="506.0" style="-fx-background-color: #808080;" />
+            <Pane layoutX="528.0" layoutY="46.0" prefHeight="131.0" prefWidth="55.0" style="-fx-background-color: #808080;" />
+         </children>
+      </Pane>
+      <Pane prefHeight="72.0" prefWidth="587.0">
+         <children>
+            <ImageView fitHeight="72.0" fitWidth="153.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@Imagenes/Iconos/icono.png" />
+               </image>
+            </ImageView>
+            <StackPane layoutX="153.0" layoutY="7.0" prefHeight="61.0" prefWidth="181.0">
+               <children>
+                  <TextField prefHeight="25.0" prefWidth="233.0" promptText="Buscar productos" style="-fx-background-color: #fdf9f7; -fx-border-color: #e19143; -fx-border-width: 1.5; -fx-border-radius: 25; -fx-background-radius: 25; -fx-padding: 5;" />
+                  <Button accessibleRole="IMAGE_VIEW" mnemonicParsing="false" style="-fx-background-color: transparent;" StackPane.alignment="CENTER_RIGHT">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Imagenes/Iconos/lupa.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </StackPane>
+            <Button layoutX="543.0" layoutY="23.0" mnemonicParsing="false" style="-fx-background-color: transparent;">
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Imagenes/Iconos/corazon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="444.0" layoutY="24.0" mnemonicParsing="false" style="-fx-background-color: #ffffff; -fx-border-color: #808080;" text="Ingresar" />
+            <Button layoutX="506.0" layoutY="19.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="46.0" style="-fx-background-color: transparent;">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Imagenes/Iconos/carrito.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button layoutX="351.0" layoutY="24.0" mnemonicParsing="false" style="-fx-background-color: #FFFFFF; -fx-border-color: #808080;" text="Crear Cuenta" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>
