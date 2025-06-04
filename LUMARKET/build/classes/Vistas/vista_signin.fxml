@@ -12,14 +12,14 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="581.0" prefWidth="687.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Vista.VistaController">
+<BorderPane prefHeight="581.0" prefWidth="687.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.controlador_login">
    <center>
       <AnchorPane id="AnchorPane" prefHeight="449.0" prefWidth="577.0" style="-fx-background-color: #f9f6f2;">
          <children>
             <AnchorPane layoutX="173.0" layoutY="54.0" prefHeight="235.0" prefWidth="303.0">
                <children>
                   <Rectangle arcHeight="20.0" arcWidth="20.0" fill="WHITE" height="311.0" stroke="#e8e6e4" strokeType="INSIDE" width="362.0" AnchorPane.bottomAnchor="-2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="0.0" />
-                  <TextField layoutX="25.0" layoutY="51.0" prefHeight="32.0" prefWidth="311.0" promptText="ejemplo123@gmail.com" />
+                  <TextField fx:id="email" layoutX="25.0" layoutY="51.0" prefHeight="32.0" prefWidth="311.0" promptText="ejemplo123@gmail.com" />
                   <Label layoutX="25.0" layoutY="21.0" text="Email">
                      <font>
                         <Font name="System Bold" size="14.0" />
@@ -30,8 +30,8 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <PasswordField layoutX="25.0" layoutY="146.0" prefHeight="32.0" prefWidth="311.0" promptText="*********" />
-                  <Button layoutX="25.0" layoutY="208.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="311.0" style="-fx-background-color: #ed9239;" text="Ingresar" textAlignment="CENTER" textFill="WHITE">
+                  <PasswordField fx:id="password" layoutX="25.0" layoutY="146.0" prefHeight="32.0" prefWidth="311.0" promptText="*********" />
+                  <Button fx:id="ingresar" layoutX="25.0" layoutY="208.0" mnemonicParsing="false" onAction="#iniciar" prefHeight="32.0" prefWidth="311.0" style="-fx-background-color: #ed9239;" text="Ingresar" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>

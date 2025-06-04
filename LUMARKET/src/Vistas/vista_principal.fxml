@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 
-<BorderPane prefHeight="581.0" prefWidth="687.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Vista.VistaController">
+<BorderPane prefHeight="581.0" prefWidth="687.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.controlador_principal">
    <center>
       <AnchorPane id="AnchorPane" prefHeight="449.0" prefWidth="577.0">
          <children>
@@ -176,7 +176,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button layoutX="512.0" layoutY="25.0" mnemonicParsing="false" style="-fx-background-color: #ffffff; -fx-border-color: #808080;" text="Ingresar" />
+                  <Button fx:id="existente" layoutX="512.0" layoutY="25.0" mnemonicParsing="false" onAction="#entrar" style="-fx-background-color: #ffffff; -fx-border-color: #808080;" text="Ingresar" />
                   <Button layoutX="593.0" layoutY="19.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="46.0" style="-fx-background-color: transparent;">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
@@ -186,7 +186,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button layoutX="406.0" layoutY="25.0" mnemonicParsing="false" style="-fx-background-color: #FFFFFF; -fx-border-color: #808080;" text="Crear Cuenta" />
+                  <Button fx:id="nuevo" layoutX="406.0" layoutY="25.0" mnemonicParsing="false" onAction="#crear" style="-fx-background-color: #FFFFFF; -fx-border-color: #808080;" text="Crear Cuenta" />
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ed933a" height="28.0" layoutX="-16.0" layoutY="68.0" stroke="#ed933a" strokeType="INSIDE" width="716.0" />
                </children>
             </AnchorPane>

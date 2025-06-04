@@ -20,10 +20,9 @@ public class PruebaVista extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/Vistas/vista_signup.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/Vistas/vista_principal.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setTitle("Vista JavaFX");
         stage.show();
     }
 
