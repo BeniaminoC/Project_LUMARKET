@@ -1,3 +1,2 @@
 benja0227@gmail.com,Benjamin,Cantero,thormanuel
 cuentica123@gmail.com,1234,prueba,cuenta
-cuenta@gmail.com,4321,pruebita,cuentica
