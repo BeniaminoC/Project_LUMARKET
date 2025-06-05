@@ -44,6 +44,8 @@ public class controlador_signup implements Initializable {
     private TextField nombres;
     @FXML
     private TextField apellidos;
+    
+    metodos_generales cambio = new metodos_generales();
 
     /**
      * Initializes the controller class.
@@ -60,13 +62,13 @@ public class controlador_signup implements Initializable {
         n=nombres.getText();
         lastn=apellidos.getText();
         pass=contraseña.getText();
-        if(guardarDatos(mail, pass, n, lastn)!=null){
+        if(cambio.guardarDatos(mail, pass, n, lastn)!=null){
             Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
             alerta.setHeaderText(null);
             alerta.setTitle("Exito");
             alerta.setContentText("Bienvenido "+n+" "+lastn);
             alerta.showAndWait();
-            cambioventana("/Vistas/vista_usuario.fxml", event);
+            cambio.cambioventana("/Vistas/vista_usuario.fxml", event);
         }else{
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setHeaderText(null);
@@ -77,42 +79,8 @@ public class controlador_signup implements Initializable {
         
     }
     
-    public usuario guardarDatos(String correo, String password, String name, String lastname){
-        try{
-        BufferedWriter guardar = new BufferedWriter(new FileWriter("src/Archivos/usuarios.txt", true));
-            guardar.write(correo+","+password+","+name+","+lastname);
-            guardar.newLine();
-            guardar.close();
-            }catch(IOException e){
-                Alert alerta = new Alert(Alert.AlertType.ERROR);
-                alerta.setHeaderText(null);
-                alerta.setTitle("Error");
-                alerta.setContentText("No se pudo modificar el archivo"+e);
-                alerta.showAndWait(); 
-        }
-        usuario q = new usuario(correo,password,name,lastname);
-        return q;
-    }
     
-    private void cambioventana (String direccion, Event evento){
-        
-        try {
-        Object eventSource = evento.getSource();
-        Node sourceNode = (Node)eventSource;
-        Scene old = sourceNode.getScene();
-        Window ventana = old.getWindow();
-        Stage stage = (Stage)ventana;
-        stage.hide();
-        
-        Parent root= FXMLLoader.load(getClass().getResource(direccion));
-        Scene scene = new Scene(root);
-        Stage nueva = new Stage();
-        nueva.setScene(scene);
-        nueva.show();
-        } catch (IOException ex) {
-            Logger.getLogger(controlador_principal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-    }
+    
+    
 }
     

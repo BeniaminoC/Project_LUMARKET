@@ -1,0 +1,10 @@
+FULL GAMER SUIT,500,/Imagenes/Productos/combogamer.png
+Audífonos Inalámbricos,60000,/Imagenes/Productos/audifonos.png
+Reloj pulsera Festina datos digitales,45000,/Imagenes/Productos/reloj.jpg
+Botella Azul con Mango de Acero,20000,/Imagenes/Productos/botella.png
+Auriculares electrónicos con cancelación de ruido,143000,/Imagenes/Productos/auriculares.jpg
+Kit Dermatológicamente Testeado,450000,/Imagenes/Productos/kit.png
+Ratón óptico logitech g305 lightpeed,199900,/Imagenes/Productos/mouse.jpg
+Refrigerador Puerta Francesa Elegante,700000,/Imagenes/Productos/refrigerador.png
+Maquinillas de afeitar eléctricas y cortadoras de cabello philips,269000,/Imagenes/Productos/rasuradora.jpg
+

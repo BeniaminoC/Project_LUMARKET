@@ -4,8 +4,10 @@
  */
 package Controladores;
 
+import Modelo.producto;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,6 +20,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
@@ -28,10 +32,22 @@ import javafx.stage.Window;
  */
 public class controlador_principal implements Initializable {
 
+    
+    metodos_generales cambio = new metodos_generales();
+    @FXML
+    private HBox homecatalogo;
+    
+    private int inicio = 0;
+    private final int ELEMENTOS_POR_PAGINA = 5;
     @FXML
     private Button existente;
     @FXML
     private Button nuevo;
+    @FXML
+    private Button derecha;
+    @FXML
+    private Button izquierda;
+
 
     /**
      * Initializes the controller class.
@@ -39,36 +55,52 @@ public class controlador_principal implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        cambio.cargarproductos(); 
+        cargarPagina(); 
+        
     }    
-
     @FXML
     private void entrar(ActionEvent event){
-        cambioventana("/Vistas/vista_login.fxml", event);
+        cambio.cambioventana("/Vistas/vista_login.fxml", event);
+    }
+    @FXML
+    private void crear(ActionEvent event){
+        cambio.cambioventana("/Vistas/vista_signup.fxml", event);
     }
 
     @FXML
-    private void crear(ActionEvent event){
-        cambioventana("/Vistas/vista_signup.fxml", event);
+    private void siguiente(ActionEvent event) {
+        if (inicio + ELEMENTOS_POR_PAGINA < cambio.catalogo.size()) {
+        inicio += ELEMENTOS_POR_PAGINA;
+        cargarPagina();
+        System.out.println("Avanzando...");
+    }
+    }
+
+    @FXML
+    private void anterior(ActionEvent event) {
+       if (inicio >= ELEMENTOS_POR_PAGINA) {
+        inicio -= ELEMENTOS_POR_PAGINA;
+        cargarPagina();
+        System.out.println("Retrocediendo...");
+    }
     }
     
-    private void cambioventana (String direccion, Event evento){
-        
+    private void cargarPagina() {
+    homecatalogo.getChildren().clear();
+    List<producto> productosPagina = cambio.obtenerProductosPagina(inicio, ELEMENTOS_POR_PAGINA);
+    
+    for (producto prod : productosPagina) {
         try {
-        Object eventSource = evento.getSource();
-        Node sourceNode = (Node)eventSource;
-        Scene old = sourceNode.getScene();
-        Window ventana = old.getWindow();
-        Stage stage = (Stage)ventana;
-        stage.hide();
-        
-        Parent root= FXMLLoader.load(getClass().getResource(direccion));
-        Scene scene = new Scene(root);
-        Stage nueva = new Stage();
-        nueva.setScene(scene);
-        nueva.show();
-        } catch (IOException ex) {
-            Logger.getLogger(controlador_principal.class.getName()).log(Level.SEVERE, null, ex);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vistas/vista_producto.fxml"));
+            VBox productoVBox = loader.load();
+            controlador_producto controller = loader.getController();
+            controller.agregarproducto(prod);
+            homecatalogo.getChildren().add(productoVBox);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        
     }
+}
+    
 }

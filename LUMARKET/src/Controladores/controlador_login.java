@@ -43,6 +43,8 @@ public class controlador_login implements Initializable {
     @FXML
     private Button ingresar;
     
+    metodos_generales cambio = new metodos_generales();
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }    
@@ -51,13 +53,13 @@ public class controlador_login implements Initializable {
     private void iniciar(ActionEvent event) {
         String em = email.getText();
         String pas = password.getText();
-        if (ConsultarArchivo("src/Archivos/usuarios.txt",em,pas)){
+        if (cambio.ConsultarArchivo("src/Archivos/usuarios.txt",em,pas)!=null){
         Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
         alerta.setHeaderText(null);
         alerta.setTitle("Exito");
         alerta.setContentText("iniciando sesion");
         alerta.showAndWait();
-        cambioventana("/Vistas/vista_usuario.fxml", event);
+        cambio.cambioventana("/Vistas/vista_usuario.fxml", event);
         }else{
         Alert alerta = new Alert(Alert.AlertType.ERROR);
         alerta.setHeaderText(null);
@@ -67,50 +69,7 @@ public class controlador_login implements Initializable {
         }
     }
     
-    public boolean ConsultarArchivo(String ubicacion, String usuario, String pass) {
-    try (BufferedReader reader = new BufferedReader(new FileReader(ubicacion))) {
-        String linea;
-        while ((linea = reader.readLine()) != null) {
-            String[] bloques = linea.split(",");
-            if (bloques.length == 4) {
-                String correo = bloques[0];
-                String contraseña = bloques[1];
-                String nombre =bloques[2];
-                String apellido= bloques [3];
-                if (correo.equals(usuario)&&contraseña.equals(pass)) {
-                    return true;
-                }
-            }
-        }
-    } catch (IOException e) {
-        Alert alerta = new Alert(Alert.AlertType.ERROR);
-        alerta.setHeaderText(null);
-        alerta.setTitle("Error");
-        alerta.setContentText("No se pudo leer el archivo");
-        alerta.showAndWait();
-    }
-    return false;
-}
     
-    private void cambioventana (String direccion, Event evento){
-        
-        try {
-        Object eventSource = evento.getSource();
-        Node sourceNode = (Node)eventSource;
-        Scene old = sourceNode.getScene();
-        Window ventana = old.getWindow();
-        Stage stage = (Stage)ventana;
-        stage.hide();
-        
-        Parent root= FXMLLoader.load(getClass().getResource(direccion));
-        Scene scene = new Scene(root);
-        Stage nueva = new Stage();
-        nueva.setScene(scene);
-        nueva.show();
-        } catch (IOException ex) {
-            Logger.getLogger(controlador_principal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-    }
+    
     
 }

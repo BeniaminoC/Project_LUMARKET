@@ -62,7 +62,7 @@
                <children>
                   <ImageView fitHeight="72.0" fitWidth="153.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@Imagenes/Iconos/icono.png" />
+                        <Image url="@../Imagenes/Iconos/icono.png" />
                      </image>
                   </ImageView>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ed933a" height="28.0" layoutX="-16.0" layoutY="68.0" stroke="#ed933a" strokeType="INSIDE" width="716.0" />
