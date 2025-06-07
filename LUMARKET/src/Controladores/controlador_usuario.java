@@ -32,7 +32,7 @@ public class controlador_usuario implements Initializable {
     
     private int inicio = 0;
     private final int ELEMENTOS_POR_PAGINA = 5;
-    metodos_generales cambio = new metodos_generales();
+    private metodos_generales modelo;
     @FXML
     private HBox usercatalogo;
 
@@ -42,8 +42,6 @@ public class controlador_usuario implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        cambio.cargarproductos(); 
-        cargarPagina(); 
     }    
 
     @FXML
@@ -57,7 +55,7 @@ public class controlador_usuario implements Initializable {
 
     @FXML
     private void avanzar(ActionEvent event) {
-        if (inicio + ELEMENTOS_POR_PAGINA < cambio.catalogo.size()) {
+        if (inicio + ELEMENTOS_POR_PAGINA < modelo.tamañoLista()) {
         inicio += ELEMENTOS_POR_PAGINA;
         cargarPagina();
         System.out.println("Avanzando...");
@@ -66,7 +64,7 @@ public class controlador_usuario implements Initializable {
     
     private void cargarPagina() {
     usercatalogo.getChildren().clear();
-    List<producto> productosPagina = cambio.obtenerProductosPagina(inicio, ELEMENTOS_POR_PAGINA);
+    List<producto> productosPagina = modelo.obtenerProductosPagina(inicio, ELEMENTOS_POR_PAGINA);
     
     for (producto prod : productosPagina) {
         try {
@@ -79,6 +77,11 @@ public class controlador_usuario implements Initializable {
             e.printStackTrace();
         }
     }
+}
+    public void ModeloCompartido(metodos_generales modelo) {
+    this.modelo = modelo;
+    modelo.antiduplicados(); 
+    cargarPagina(); 
 }
     
 }

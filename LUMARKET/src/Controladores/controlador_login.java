@@ -43,23 +43,23 @@ public class controlador_login implements Initializable {
     @FXML
     private Button ingresar;
     
-    metodos_generales cambio = new metodos_generales();
+    private metodos_generales modelo;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
     }    
 
     @FXML
-    private void iniciar(ActionEvent event) {
+    private void iniciar(ActionEvent event) throws IOException {
         String em = email.getText();
         String pas = password.getText();
-        if (cambio.ConsultarArchivo("src/Archivos/usuarios.txt",em,pas)!=null){
+        if (modelo.ConsultarArchivo("src/Archivos/usuarios.txt",em,pas)!=null){
         Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
         alerta.setHeaderText(null);
         alerta.setTitle("Exito");
         alerta.setContentText("iniciando sesion");
         alerta.showAndWait();
-        cambio.cambioventana("/Vistas/vista_usuario.fxml", event);
+        modelo.cambioventana("/Vistas/vista_usuario.fxml", event,this.modelo);
         }else{
         Alert alerta = new Alert(Alert.AlertType.ERROR);
         alerta.setHeaderText(null);
@@ -69,7 +69,8 @@ public class controlador_login implements Initializable {
         }
     }
     
-    
-    
+    public void ModeloCompartido(metodos_generales modelo) {
+    this.modelo = modelo;
+}   
     
 }

@@ -4,6 +4,7 @@
  */
 package Controladores;
 
+import Modelo.Nodo_LS;
 import Modelo.producto;
 import Modelo.usuario;
 import java.io.BufferedReader;
@@ -33,9 +34,12 @@ import javafx.stage.Window;
  */
 public class metodos_generales {
     
-    public ArrayList<producto> catalogo = new ArrayList();
+    public metodos_generales(){ 
+        cab=null; 
+    }
     
-    public void cambioventana (String direccion, ActionEvent evento){
+    
+    public void cambioventana (String direccion, ActionEvent evento, metodos_generales modelo){
         
         try {
         Object eventSource = evento.getSource();
@@ -45,7 +49,20 @@ public class metodos_generales {
         Stage stage = (Stage)ventana;
         stage.hide();
         
-        Parent root= FXMLLoader.load(getClass().getResource(direccion));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(direccion));
+        Parent root = loader.load();
+        Object controlador = loader.getController();
+        
+        if (controlador instanceof controlador_principal) {
+            ((controlador_principal) controlador).ModeloCompartido(modelo);
+        }else if (controlador instanceof controlador_login) {
+            ((controlador_login) controlador).ModeloCompartido(modelo);
+        }else if (controlador instanceof controlador_signup) {
+            ((controlador_signup) controlador).ModeloCompartido(modelo);
+        }else if (controlador instanceof controlador_usuario) {
+            ((controlador_usuario) controlador).ModeloCompartido(modelo);
+        }
+        
         Scene scene = new Scene(root);
         Stage nueva = new Stage();
         nueva.setScene(scene);
@@ -104,21 +121,6 @@ public class metodos_generales {
         }
     }
     
-    public void productosacatalogo(HBox generar){
-        for (producto prod:catalogo){
-            try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vistas/vista_producto.fxml"));
-            VBox productoVBox = loader.load();
-            controlador_producto controller = loader.getController();
-            controller.agregarproducto(prod);
-            generar.getChildren().add(productoVBox);
-            
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        }
-    }
-    
     public void cargarproductos(){
         try{
         BufferedReader leer = new BufferedReader(new FileReader("src/Archivos/listaproductos.txt"));
@@ -131,8 +133,8 @@ public class metodos_generales {
             String imagen=bloques[2];
             
             producto q=new producto(nombre, precio, imagen);
-            catalogo.add(q);
-            System.out.println("Productos cargados: " + catalogo.size());
+            agregar(q);
+            System.out.println("Productos cargados: " + tamañoLista());
             }
         }
         leer.close();
@@ -146,16 +148,61 @@ public class metodos_generales {
     }
     
     public void antiduplicados(){
-        if (catalogo==null){
+        if (listaVacia()){
             cargarproductos();
         }
-
     }
     
+    public List<producto> obtenerProductosPagina(int inicio, int cantidad) {
+    return obtenerRango(inicio, cantidad);
+        }
 
-public List<producto> obtenerProductosPagina(int inicio, int cantidad) {
-    int fin = Math.min(inicio + cantidad, catalogo.size());
-    return catalogo.subList(inicio, fin);
-}
+    public List<producto> obtenerRango(int inicio, int cantidad) {
+        List<producto> resultado = new ArrayList<>();
+        Nodo_LS actual = cab;
+        int index = 0;
 
+        while (actual != null && resultado.size() < cantidad) {
+            if (index >= inicio) {
+                resultado.add((producto)actual.dato);
+            }
+            actual = actual.sig;
+            index++;
+        }
+
+        return resultado;
+    }
+
+    //Metodos lista sencilla
+    public Nodo_LS<producto> cab;
+     
+    public boolean listaVacia(){ 
+        return cab==null?true:false; 
+    }
+    
+    public void agregar(producto prod) {
+        Nodo_LS nuevo = new Nodo_LS(prod);
+        if (cab == null) {
+            cab = nuevo;
+        } else {
+            Nodo_LS actual = cab;
+            while (actual.sig != null) {
+                actual = actual.sig;
+            }
+            actual.sig  = nuevo;
+        }
+    }
+    
+    public int tamañoLista(){
+        if(listaVacia()) return 0;
+        else{
+            Nodo_LS<producto> p=cab;
+            int cont=0;
+            while(p!=null){
+                cont++;
+                p=p.sig;
+            }
+            return cont;
+        }
+    }
 }

@@ -20,7 +20,10 @@ public class PruebaVista extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/Vistas/vista_principal.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vistas/vista_principal.fxml"));
+        Parent root = loader.load();
+        controlador_principal controller = loader.getController();
+        controller.ModeloCompartido(new metodos_generales());
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

@@ -33,13 +33,13 @@ import javafx.stage.Window;
  */
 public class controlador_principal implements Initializable {
 
-    
-    metodos_generales cambio = new metodos_generales();
     @FXML
     private HBox homecatalogo;
     
+    private metodos_generales modelo;
     private int inicio = 0;
     private final int ELEMENTOS_POR_PAGINA = 5;
+    
     @FXML
     private Button existente;
     @FXML
@@ -55,23 +55,20 @@ public class controlador_principal implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-        cambio.cargarproductos(); 
-        cargarPagina(); 
-        
+        // TODO    
     }    
     @FXML
-    private void entrar(ActionEvent event){
-        cambio.cambioventana("/Vistas/vista_login.fxml", event);
+    private void entrar(ActionEvent event) throws IOException{
+        modelo.cambioventana("/Vistas/vista_login.fxml", event,this.modelo);
     }
     @FXML
-    private void crear(ActionEvent event){
-        cambio.cambioventana("/Vistas/vista_signup.fxml", event);
+    private void crear(ActionEvent event) throws IOException{
+        modelo.cambioventana("/Vistas/vista_signup.fxml", event,this.modelo);
     }
 
     @FXML
     private void siguiente(ActionEvent event) {
-        if (inicio + ELEMENTOS_POR_PAGINA < cambio.catalogo.size()) {
+        if (inicio + ELEMENTOS_POR_PAGINA < modelo.tamañoLista()) {
         inicio += ELEMENTOS_POR_PAGINA;
         cargarPagina();
         System.out.println("Avanzando...");
@@ -89,7 +86,7 @@ public class controlador_principal implements Initializable {
     
     private void cargarPagina() {
     homecatalogo.getChildren().clear();
-    List<producto> productosPagina = cambio.obtenerProductosPagina(inicio, ELEMENTOS_POR_PAGINA);
+    List<producto> productosPagina = modelo.obtenerProductosPagina(inicio, ELEMENTOS_POR_PAGINA);
     
     for (producto prod : productosPagina) {
         try {
@@ -102,6 +99,12 @@ public class controlador_principal implements Initializable {
             e.printStackTrace();
         }
     }
+}
+    
+    public void ModeloCompartido(metodos_generales modelo) {
+    this.modelo = modelo;
+     modelo.antiduplicados();
+     cargarPagina(); 
 }
     
 }

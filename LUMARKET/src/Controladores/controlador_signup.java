@@ -45,7 +45,7 @@ public class controlador_signup implements Initializable {
     @FXML
     private TextField apellidos;
     
-    metodos_generales cambio = new metodos_generales();
+    private metodos_generales modelo;
 
     /**
      * Initializes the controller class.
@@ -56,19 +56,19 @@ public class controlador_signup implements Initializable {
     }    
 
     @FXML
-    private void creacionCuenta(ActionEvent event) {
+    private void creacionCuenta(ActionEvent event) throws IOException {
         String mail, n, lastn, pass;
         mail=email.getText();
         n=nombres.getText();
         lastn=apellidos.getText();
         pass=contraseña.getText();
-        if(cambio.guardarDatos(mail, pass, n, lastn)!=null){
+        if(modelo.guardarDatos(mail, pass, n, lastn)!=null){
             Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
             alerta.setHeaderText(null);
             alerta.setTitle("Exito");
             alerta.setContentText("Bienvenido "+n+" "+lastn);
             alerta.showAndWait();
-            cambio.cambioventana("/Vistas/vista_usuario.fxml", event);
+            modelo.cambioventana("/Vistas/vista_usuario.fxml", event,this.modelo);
         }else{
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setHeaderText(null);
@@ -79,7 +79,9 @@ public class controlador_signup implements Initializable {
         
     }
     
-    
+    public void ModeloCompartido(metodos_generales modelo) {
+    this.modelo = modelo;
+}
     
     
 }
