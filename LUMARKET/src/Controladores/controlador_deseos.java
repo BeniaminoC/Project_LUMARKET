@@ -4,18 +4,12 @@
  */
 package Controladores;
 
-import Modelo.producto;
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
@@ -23,13 +17,11 @@ import javafx.scene.layout.VBox;
  *
  * @author BENJAMIN
  */
-public class controlador_usuario implements Initializable {
+public class controlador_deseos implements Initializable {
 
-    
-    private int inicio = 0;
-    private final int ELEMENTOS_POR_PAGINA = 5;
+    @FXML
+    private VBox favlist;
     private metodos_generales modelo;
-    private HBox usercatalogo;
 
     /**
      * Initializes the controller class.
@@ -37,44 +29,29 @@ public class controlador_usuario implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-
-    private void retroceder(ActionEvent event) {
-        if (inicio >= ELEMENTOS_POR_PAGINA) {
-        inicio -= ELEMENTOS_POR_PAGINA;
-        cargarPagina();
-        System.out.println("Retrocediendo...");
-    }
-    }
-
-    private void avanzar(ActionEvent event) {
-        if (inicio + ELEMENTOS_POR_PAGINA < modelo.tamañoLista()) {
-        inicio += ELEMENTOS_POR_PAGINA;
-        cargarPagina();
-        System.out.println("Avanzando...");
-    }
-    }
+    }   
     
-    private void cargarPagina() {
-    usercatalogo.getChildren().clear();
+    private void cargarFavs() {
+    favlist.getChildren().clear();
     List<producto> productosPagina = modelo.obtenerProductosPagina(inicio, ELEMENTOS_POR_PAGINA);
     
     for (producto prod : productosPagina) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vistas/vista_producto.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vistas/favorito.fxml"));
             VBox productoVBox = loader.load();
             controlador_producto controller = loader.getController();
             controller.agregarproducto(prod);
-            usercatalogo.getChildren().add(productoVBox);
+            favlist.getChildren().add(productoVBox);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-}
+    }
+    
     public void ModeloCompartido(metodos_generales modelo) {
     this.modelo = modelo;
-    modelo.antiduplicados(); 
-    cargarPagina(); 
+     modelo.antiduplicados();
+     cargarFavs(); 
 }
     
 }

@@ -90,7 +90,7 @@ public class controlador_principal implements Initializable {
     
     for (producto prod : productosPagina) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vistas/vista_producto.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vistas/producto.fxml"));
             VBox productoVBox = loader.load();
             controlador_producto controller = loader.getController();
             controller.agregarproducto(prod);

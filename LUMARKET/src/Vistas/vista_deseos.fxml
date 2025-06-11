@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="581.0" prefWidth="687.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.controlador_deseos">
+   <center>
+      <AnchorPane id="AnchorPane" prefHeight="449.0" prefWidth="577.0">
+         <children>
+            <Label layoutX="39.0" layoutY="21.0" />
+            <HBox layoutX="70.0" layoutY="27.0" prefHeight="16.0" prefWidth="200.0" spacing="30.0">
+               <children>
+                  <Label text="Compras" textFill="FORESTGREEN">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label text="&gt;">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label text="Favoritos" textFill="FORESTGREEN">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <VBox layoutX="70.0" layoutY="79.0" prefHeight="321.0" prefWidth="591.0" spacing="10.0">
+               <children>
+                  <HBox prefHeight="39.0" prefWidth="591.0" spacing="350.0">
+                     <children>
+                        <Label text="Favoritos">
+                           <font>
+                              <Font name="System Bold" size="24.0" />
+                           </font>
+                        </Label>
+                        <Button alignment="CENTER" mnemonicParsing="false" prefHeight="37.0" prefWidth="127.0" style="-fx-background-color: #228b22; -fx-background-radius: 20; -fx-border-radius: 20;" text="Crear lista" textFill="WHITE">
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../Imagenes/Iconos/carpeta.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="28.0" prefWidth="431.0">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <children>
+                        <StackPane prefHeight="28.0" prefWidth="285.0" style="-fx-background-color: #ffffff;">
+                           <children>
+                              <Button alignment="CENTER" mnemonicParsing="false" prefHeight="29.0" prefWidth="45.0" style="-fx-background-color: transparent;" text="Listas" StackPane.alignment="TOP_RIGHT" />
+                              <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="84.0" style="-fx-background-color: transparent;" text="Mis favoritos" StackPane.alignment="TOP_LEFT" />
+                           </children>
+                           <padding>
+                              <Insets left="40.0" right="60.0" />
+                           </padding>
+                        </StackPane>
+                     </children>
+                  </HBox>
+                  <ScrollPane prefHeight="239.0" prefWidth="591.0" style="-fx-border-color: transparent;">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <VBox fx:id="favlist" prefHeight="175.0" prefWidth="167.0" />
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </ScrollPane>
+               </children>
+            </VBox>
+         </children></AnchorPane>
+   </center>
+   <bottom>
+      <Pane prefHeight="58.0" prefWidth="643.0" style="-fx-background-color: #D3A468;" BorderPane.alignment="CENTER" />
+   </bottom>
+   <top>
+      <AnchorPane BorderPane.alignment="CENTER">
+         <children>
+            <AnchorPane prefHeight="96.0" prefWidth="627.0">
+               <children>
+                  <ImageView fitHeight="72.0" fitWidth="153.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Imagenes/Iconos/icono.png" />
+                     </image>
+                  </ImageView>
+                  <StackPane layoutX="184.0" layoutY="7.0" prefHeight="61.0" prefWidth="181.0">
+                     <children>
+                        <TextField prefHeight="25.0" prefWidth="233.0" promptText="Buscar productos" style="-fx-background-color: #fdf9f7; -fx-border-color: #e19143; -fx-border-width: 1.5; -fx-border-radius: 25; -fx-background-radius: 25; -fx-padding: 5;" />
+                        <Button accessibleRole="IMAGE_VIEW" mnemonicParsing="false" style="-fx-background-color: transparent;" StackPane.alignment="CENTER_RIGHT">
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../Imagenes/Iconos/lupa.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </StackPane>
+                  <Button layoutX="642.0" layoutY="22.0" mnemonicParsing="false" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Imagenes/Iconos/corazon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button layoutX="465.0" layoutY="20.0" mnemonicParsing="false" prefHeight="15.0" prefWidth="119.0" style="-fx-background-color: transparent; -fx-background-radius: 25; -fx-border-color: #e19143; -fx-border-radius: 25;" text="   Usuario">
+                     <graphic>
+                        <ImageView fitHeight="26.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Imagenes/Iconos/usuario.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button layoutX="593.0" layoutY="19.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="46.0" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Imagenes/Iconos/carrito.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ed933a" height="28.0" layoutX="-16.0" layoutY="68.0" stroke="#ed933a" strokeType="INSIDE" width="747.0" />
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </top>
+</BorderPane>
