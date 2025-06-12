@@ -4,12 +4,15 @@
  */
 package Controladores;
 
+import Modelo.Nodo_LD;
+import Modelo.producto;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 /**
@@ -33,15 +36,17 @@ public class controlador_deseos implements Initializable {
     
     private void cargarFavs() {
     favlist.getChildren().clear();
-    List<producto> productosPagina = modelo.obtenerProductosPagina(inicio, ELEMENTOS_POR_PAGINA);
+    modelo.cargarFavoritos(modelo.actual.idu);
+    Nodo_LD <producto> aux = modelo.cab_d;
     
-    for (producto prod : productosPagina) {
+    while (aux!=null) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vistas/favorito.fxml"));
-            VBox productoVBox = loader.load();
-            controlador_producto controller = loader.getController();
-            controller.agregarproducto(prod);
+            HBox productoVBox = loader.load();
+            controlador_favorito controller = loader.getController();
+            controller.agregarfavorito(aux.dato);
             favlist.getChildren().add(productoVBox);
+            aux=aux.sig;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -50,8 +55,8 @@ public class controlador_deseos implements Initializable {
     
     public void ModeloCompartido(metodos_generales modelo) {
     this.modelo = modelo;
-     modelo.antiduplicados();
-     cargarFavs(); 
+    modelo.antiduplicados();
+    cargarFavs();
 }
     
 }

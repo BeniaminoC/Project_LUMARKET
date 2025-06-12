@@ -9,15 +9,16 @@ package Modelo;
  * @author BENJAMIN
  */
 public class producto {
+    public String idp;
     public String nombre;
     public float precio;
     public String imagen;
 
-    public producto(String nombre, float precio, String imagen) {
+    public producto(String idp, String nombre, float precio, String imagen) {
+        this.idp = idp;
         this.nombre = nombre;
         this.precio = precio;
         this.imagen = imagen;
     }
-    
     
 }

@@ -4,6 +4,7 @@
  */
 package Controladores;
 
+import Modelo.Nodo_LD;
 import Modelo.Nodo_LS;
 import Modelo.producto;
 import Modelo.usuario;
@@ -13,7 +14,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
@@ -35,9 +38,12 @@ import javafx.stage.Window;
 public class metodos_generales {
     
     public metodos_generales(){ 
-        cab=null; 
+        cab_s=null; 
+        cab_d=null;
+        actual=null;
     }
     
+    usuario actual;
     
     public void cambioventana (String direccion, ActionEvent evento, metodos_generales modelo){
         
@@ -61,6 +67,8 @@ public class metodos_generales {
             ((controlador_signup) controlador).ModeloCompartido(modelo);
         }else if (controlador instanceof controlador_usuario) {
             ((controlador_usuario) controlador).ModeloCompartido(modelo);
+        }else if (controlador instanceof controlador_deseos) {
+            ((controlador_deseos) controlador).ModeloCompartido(modelo);
         }
         
         Scene scene = new Scene(root);
@@ -78,13 +86,14 @@ public class metodos_generales {
         String linea;
         while ((linea = reader.readLine()) != null) {
             String[] bloques = linea.split(",");
-            if (bloques.length == 4) {
+            if (bloques.length == 5) {
                 String correo = bloques[0];
                 String contraseña = bloques[1];
                 String nombre =bloques[2];
                 String apellido= bloques [3];
+                String id = bloques[4];
                 if (correo.equals(usuario)&&contraseña.equals(pass)) {
-                    usuario p=new usuario(correo,contraseña, nombre,apellido);
+                    usuario p=new usuario(correo,contraseña, nombre,apellido,id);
                     return p;
                 }
             }
@@ -99,14 +108,14 @@ public class metodos_generales {
     return null;
 }
     
-    public usuario guardarDatos(String correo, String password, String name, String lastname){
+    public usuario guardarDatos(String correo, String password, String name, String lastname, String id){
         if(ConsultarArchivo("src/Archivos/usuarios.txt",correo,password)==null){
         try{
         BufferedWriter guardar = new BufferedWriter(new FileWriter("src/Archivos/usuarios.txt", true));
-            guardar.write(correo+","+password+","+name+","+lastname);
+            guardar.write(correo+","+password+","+name+","+lastname+","+id);
             guardar.newLine();
             guardar.close();
-            usuario q = new usuario(correo,password,name,lastname);
+            usuario q = new usuario(correo,password,name,lastname,id);
             return q;
             }catch(IOException e){
                 Alert alerta = new Alert(Alert.AlertType.ERROR);
@@ -127,14 +136,15 @@ public class metodos_generales {
         String linea="";
         while ((linea=leer.readLine())!=null){
             String[] bloques= linea.split(",");
-            if (bloques.length==3){
-            String nombre=bloques[0];
-            float precio=Float.parseFloat(bloques[1]);
-            String imagen=bloques[2];
+            if (bloques.length==4){
+            String id=bloques[0];
+            String nombre=bloques[1];
+            float precio=Float.parseFloat(bloques[2]);
+            String imagen=bloques[3];
             
-            producto q=new producto(nombre, precio, imagen);
-            agregar(q);
-            System.out.println("Productos cargados: " + tamañoLista());
+            producto q=new producto(id,nombre, precio, imagen);
+            agregarSen(q);
+            System.out.println("Productos cargados: " + tamañoListaSen());
             }
         }
         leer.close();
@@ -148,7 +158,7 @@ public class metodos_generales {
     }
     
     public void antiduplicados(){
-        if (listaVacia()){
+        if (listaSenVacia()){
             cargarproductos();
         }
     }
@@ -159,7 +169,7 @@ public class metodos_generales {
 
     public List<producto> obtenerRango(int inicio, int cantidad) {
         List<producto> resultado = new ArrayList<>();
-        Nodo_LS actual = cab;
+        Nodo_LS actual = cab_s;
         int index = 0;
 
         while (actual != null && resultado.size() < cantidad) {
@@ -174,18 +184,18 @@ public class metodos_generales {
     }
 
     //Metodos lista sencilla
-    public Nodo_LS<producto> cab;
+    public Nodo_LS<producto> cab_s;
      
-    public boolean listaVacia(){ 
-        return cab==null?true:false; 
+    public boolean listaSenVacia(){ 
+        return cab_s==null?true:false; 
     }
     
-    public void agregar(producto prod) {
+    public void agregarSen(producto prod) {
         Nodo_LS nuevo = new Nodo_LS(prod);
-        if (cab == null) {
-            cab = nuevo;
+        if (cab_s == null) {
+            cab_s = nuevo;
         } else {
-            Nodo_LS actual = cab;
+            Nodo_LS actual = cab_s;
             while (actual.sig != null) {
                 actual = actual.sig;
             }
@@ -193,10 +203,10 @@ public class metodos_generales {
         }
     }
     
-    public int tamañoLista(){
-        if(listaVacia()) return 0;
+    public int tamañoListaSen(){
+        if(listaSenVacia()) return 0;
         else{
-            Nodo_LS<producto> p=cab;
+            Nodo_LS<producto> p=cab_s;
             int cont=0;
             while(p!=null){
                 cont++;
@@ -205,4 +215,112 @@ public class metodos_generales {
             return cont;
         }
     }
+    
+    //Metodos para IDs
+    
+    public Set<String> obtenerIDsExistentes(String archivo) {
+    Set<String> ids = new HashSet<>();
+    try (BufferedReader lector = new BufferedReader(new FileReader(archivo))) {
+        String linea;
+        while ((linea = lector.readLine()) != null) {
+            String[] partes = linea.split(",");
+            if (partes.length > 0) {
+                ids.add(partes[0].trim());
+            }
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+    return ids;
+}
+
+    public String generarIDUnico(Set<String> existentes, String tipo) {
+    int contador = 100;
+    String pref="";
+    String nuevoID;
+    switch(tipo){
+        case "usuario":
+            pref="U";
+            break;
+        
+        case"producto":
+            pref="P";
+            break;
+    }
+    do {
+        nuevoID = pref + contador;
+        contador++;
+    } while (existentes.contains(nuevoID));
+    return nuevoID;
+}
+    
+    //Metodos lista doble
+    
+    public Nodo_LD<producto> cab_d;
+    
+    public boolean listaVaciaDob(){ 
+        return cab_d==null?true:false; 
+    }
+    
+    public Nodo_LD<producto> Ultimo(){
+        if(listaVaciaDob()) return null;
+        else{
+            Nodo_LD<producto> p=cab_d;
+            while(p.sig!=null)
+                p=p.sig;
+            return p;
+        }
+    }
+    
+    public boolean AñadirInicio(producto datos){
+        producto temp = datos;
+        if(temp!=null){
+            Nodo_LD<producto> info = new Nodo_LD(temp);
+            if(listaVaciaDob())
+                cab_d=info;
+            else{
+                info.sig = cab_d;
+                cab_d.ant = info;
+                cab_d = info;
+            }
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    public producto buscarProductoPorID(String id) {
+    Nodo_LS <producto> actual = cab_s;
+    while (actual != null) {
+        if (actual.dato.idp.equals(id)) {
+            return actual.dato;
+        }
+        actual = actual.sig;
+    }
+    return null;
+}
+
+    
+    public void cargarFavoritos(String userId) {
+    try (BufferedReader br = new BufferedReader(new FileReader("src/Archivos/listafavoritos.txt"))) {
+        String linea;
+        while ((linea = br.readLine()) != null) {
+            String[] partes = linea.split(":");
+            if (partes.length == 2 && partes[0].equals(userId)) {
+                String[] idsProductos = partes[1].split(",");
+                for (String id : idsProductos) {
+                    producto p = buscarProductoPorID(id.trim());
+                    if (p != null) {
+                        AñadirInicio(p);
+                    }
+                }
+                break;
+            }
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+    
+    
 }

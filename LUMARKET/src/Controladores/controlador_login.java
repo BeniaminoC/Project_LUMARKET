@@ -53,7 +53,8 @@ public class controlador_login implements Initializable {
     private void iniciar(ActionEvent event) throws IOException {
         String em = email.getText();
         String pas = password.getText();
-        if (modelo.ConsultarArchivo("src/Archivos/usuarios.txt",em,pas)!=null){
+        modelo.actual=modelo.ConsultarArchivo("src/Archivos/usuarios.txt",em,pas);
+        if (modelo.actual!=null){
         Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
         alerta.setHeaderText(null);
         alerta.setTitle("Exito");

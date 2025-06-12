@@ -57,12 +57,14 @@ public class controlador_signup implements Initializable {
 
     @FXML
     private void creacionCuenta(ActionEvent event) throws IOException {
-        String mail, n, lastn, pass;
+        String mail, n, lastn, pass, id;
         mail=email.getText();
         n=nombres.getText();
         lastn=apellidos.getText();
         pass=contraseña.getText();
-        if(modelo.guardarDatos(mail, pass, n, lastn)!=null){
+        id=modelo.generarIDUnico(modelo.obtenerIDsExistentes("src/Archivos/usuarios.txt"), "usuario");
+        modelo.actual=modelo.guardarDatos(mail, pass, n, lastn, id);
+        if(modelo.actual!=null){
             Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
             alerta.setHeaderText(null);
             alerta.setTitle("Exito");

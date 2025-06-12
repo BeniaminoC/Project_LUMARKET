@@ -68,7 +68,7 @@ public class controlador_principal implements Initializable {
 
     @FXML
     private void siguiente(ActionEvent event) {
-        if (inicio + ELEMENTOS_POR_PAGINA < modelo.tamañoLista()) {
+        if (inicio + ELEMENTOS_POR_PAGINA < modelo.tamañoListaSen()) {
         inicio += ELEMENTOS_POR_PAGINA;
         cargarPagina();
         System.out.println("Avanzando...");

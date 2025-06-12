@@ -29,7 +29,14 @@ public class controlador_usuario implements Initializable {
     private int inicio = 0;
     private final int ELEMENTOS_POR_PAGINA = 5;
     private metodos_generales modelo;
+    @FXML
     private HBox usercatalogo;
+    @FXML
+    private Button atras;
+    @FXML
+    private Button adelante;
+    @FXML
+    private Button fav;
 
     /**
      * Initializes the controller class.
@@ -39,6 +46,7 @@ public class controlador_usuario implements Initializable {
         // TODO
     }    
 
+    @FXML
     private void retroceder(ActionEvent event) {
         if (inicio >= ELEMENTOS_POR_PAGINA) {
         inicio -= ELEMENTOS_POR_PAGINA;
@@ -47,8 +55,9 @@ public class controlador_usuario implements Initializable {
     }
     }
 
+    @FXML
     private void avanzar(ActionEvent event) {
-        if (inicio + ELEMENTOS_POR_PAGINA < modelo.tamañoLista()) {
+        if (inicio + ELEMENTOS_POR_PAGINA < modelo.tamañoListaSen()) {
         inicio += ELEMENTOS_POR_PAGINA;
         cargarPagina();
         System.out.println("Avanzando...");
@@ -76,5 +85,10 @@ public class controlador_usuario implements Initializable {
     modelo.antiduplicados(); 
     cargarPagina(); 
 }
+
+    @FXML
+    private void abrir(ActionEvent event) {
+        modelo.cambioventana("/Vistas/vista_deseos.fxml", event,this.modelo);
+    }
     
 }

@@ -8,7 +8,13 @@ package Modelo;
  *
  * @author BENJAMIN
  */
-public class Ldeseos {
-    String usermail;
-    
+public class Nodo_LD <T> {
+    public T dato;
+    public Nodo_LD <T> sig;
+    public Nodo_LD <T> ant;
+
+    public Nodo_LD(T dato) {
+        this.dato = dato;
+        sig = ant = null;
+    }
 }
