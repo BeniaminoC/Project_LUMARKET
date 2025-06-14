@@ -13,10 +13,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -74,6 +76,11 @@ public class controlador_usuario implements Initializable {
             VBox productoVBox = loader.load();
             controlador_producto controller = loader.getController();
             controller.agregarproducto(prod);
+            productoVBox.setOnMouseClicked(e -> {
+                modelo.datosProducto("/Vistas/vista_infoproducto.fxml", prod,modelo);
+                Stage ventanaActual = (Stage) ((Node) e.getSource()).getScene().getWindow();
+        ventanaActual.close();
+            });
             usercatalogo.getChildren().add(productoVBox);
         } catch (IOException e) {
             e.printStackTrace();

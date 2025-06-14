@@ -13,12 +13,14 @@ public class producto {
     public String nombre;
     public float precio;
     public String imagen;
+    public int cantidad;
 
-    public producto(String idp, String nombre, float precio, String imagen) {
+    public producto(String idp, String nombre, float precio, String imagen, int cantidad) {
         this.idp = idp;
         this.nombre = nombre;
         this.precio = precio;
         this.imagen = imagen;
+        this.cantidad = cantidad;
     }
     
 }

@@ -6,10 +6,12 @@ package Controladores;
 
 import Modelo.Nodo_LD;
 import Modelo.Nodo_LS;
+import Modelo.historial;
 import Modelo.producto;
 import Modelo.usuario;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -136,13 +138,13 @@ public class metodos_generales {
         String linea="";
         while ((linea=leer.readLine())!=null){
             String[] bloques= linea.split(",");
-            if (bloques.length==4){
+            if (bloques.length==5){
             String id=bloques[0];
             String nombre=bloques[1];
             float precio=Float.parseFloat(bloques[2]);
             String imagen=bloques[3];
-            
-            producto q=new producto(id,nombre, precio, imagen);
+            int cant=Integer.parseInt(bloques[4]);
+            producto q=new producto(id,nombre, precio, imagen, cant);
             agregarSen(q);
             System.out.println("Productos cargados: " + tamañoListaSen());
             }
@@ -182,6 +184,22 @@ public class metodos_generales {
 
         return resultado;
     }
+    
+    public void datosProducto(String direccion, producto prodSelected, metodos_generales modelo) {
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(direccion));
+        Parent root = loader.load();
+        controlador_infoproducto controller = loader.getController();
+        controller.ModeloCompartido(modelo, prodSelected);
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
+
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+
 
     //Metodos lista sencilla
     public Nodo_LS<producto> cab_s;
@@ -215,6 +233,59 @@ public class metodos_generales {
             return cont;
         }
     }
+    
+    public void actualizarcantidad(int cant, String id) {
+    Nodo_LS<producto> actual = cab_s;
+    while (actual != null) {
+        if (actual.dato.idp.equals(id)) {
+            actual.dato.cantidad=actual.dato.cantidad-cant;
+        }
+        actual = actual.sig;
+    }
+}
+    
+    public void actualizarArchivo(String idProducto, int nuevaCantidad) {
+    File archivoOriginal = new File("src/Archivos/listaproductos.txt");
+    File archivoTemporal = new File("src/Archivos/temp_productos.txt");
+
+    try (BufferedReader lector = new BufferedReader(new FileReader(archivoOriginal));
+         BufferedWriter escritor = new BufferedWriter(new FileWriter(archivoTemporal))) {
+
+        String linea;
+        boolean encontrado = false;
+
+        while ((linea = lector.readLine()) != null) {
+            String[] campos = linea.split(",");
+
+            if (campos.length == 5 && campos[0].equals(idProducto)) {
+                campos[4] = String.valueOf(nuevaCantidad);
+                linea = String.join(",", campos);
+                encontrado = true;
+            }
+
+            escritor.write(linea);
+            escritor.newLine();
+        }
+
+        if (!encontrado) {
+            System.out.println("Producto con ID " + idProducto + " no encontrado.");
+        }
+
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+
+    if (archivoOriginal.delete()) {
+        if (!archivoTemporal.renameTo(archivoOriginal)) {
+            System.out.println("No se pudo renombrar el archivo temporal.");
+        }
+    } else {
+        System.out.println("No se pudo eliminar el archivo original.");
+    }
+}
+
+    
+
     
     //Metodos para IDs
     
@@ -321,6 +392,20 @@ public class metodos_generales {
         e.printStackTrace();
     }
 }
-    
+  
+    public void compraunitaria(historial h){
+        try{
+        BufferedWriter guardar = new BufferedWriter(new FileWriter("src/Archivos/historiales.txt", true));
+            guardar.write(h.id+","+h.fecha+","+h.direccion+","+h.articulos[0]+","+String.valueOf(h.total));
+            guardar.newLine();
+            guardar.close();
+            }catch(IOException e){
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                alerta.setHeaderText(null);
+                alerta.setTitle("Error");
+                alerta.setContentText("No se pudo modificar el archivo");
+                alerta.showAndWait(); 
+        } 
+    }
     
 }

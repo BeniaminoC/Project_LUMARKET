@@ -1,10 +1,10 @@
-P1,FULL GAMER SUIT,500,/Imagenes/Productos/combogamer.png
-P2,Audífonos Inalámbricos,60000,/Imagenes/Productos/audifonos.png
-P3,Reloj pulsera Festina datos digitales,45000,/Imagenes/Productos/reloj.jpg
-P4,Botella Azul con Mango de Acero,20000,/Imagenes/Productos/botella.png
-P5,Auriculares electrónicos con cancelación de ruido,143000,/Imagenes/Productos/auriculares.jpg
-P6,Kit Dermatológicamente Testeado,450000,/Imagenes/Productos/kit.png
-P7,Ratón óptico logitech g305 lightpeed,199900,/Imagenes/Productos/mouse.jpg
-P8,Refrigerador Puerta Francesa Elegante,700000,/Imagenes/Productos/refrigerador.png
-P9,Maquinillas de afeitar eléctricas y cortadoras de cabello philips,269000,/Imagenes/Productos/rasuradora.jpg
+P1,FULL GAMER SUIT,500,/Imagenes/Productos/combogamer.png,1
+P2,Audífonos Inalámbricos,60000,/Imagenes/Productos/audifonos.png,2
+P3,Reloj pulsera Festina datos digitales,45000,/Imagenes/Productos/reloj.jpg,3
+P4,Botella Azul con Mango de Acero,20000,/Imagenes/Productos/botella.png,4
+P5,Auriculares electrónicos con cancelación de ruido,143000,/Imagenes/Productos/auriculares.jpg,5
+P6,Kit Dermatológicamente Testeado,450000,/Imagenes/Productos/kit.png,6
+P7,Ratón óptico logitech g305 lightpeed,199900,/Imagenes/Productos/mouse.jpg,7
+P8,Refrigerador Puerta Francesa Elegante,700000,/Imagenes/Productos/refrigerador.png,8
+P9,Maquinillas de afeitar eléctricas y cortadoras de cabello philips,269000,/Imagenes/Productos/rasuradora.jpg,9
 

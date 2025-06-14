@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 
 /**
  * FXML Controller class
@@ -26,7 +27,7 @@ public class controlador_producto implements Initializable {
     private Label prodname;
     @FXML
     private Label cost;
-
+    
     /**
      * Initializes the controller class.
      */
@@ -36,12 +37,11 @@ public class controlador_producto implements Initializable {
         
     }    
     
-    @FXML
     public void agregarproducto(producto n){
         prodname.setText(n.nombre);
         cost.setText(String.valueOf(n.precio)+"$");
         Image img = new Image(getClass().getResource(n.imagen).toExternalForm());
         foto.setImage(img);
     }
-    
+
 }
