@@ -47,6 +47,10 @@ public class controlador_infoproducto implements Initializable {
     private Button compra;
     @FXML
     private TextField cant;
+    @FXML
+    private Button b_carrito;
+    @FXML
+    private Button logo;
 
     /**
      * Initializes the controller class.
@@ -77,7 +81,7 @@ public class controlador_infoproducto implements Initializable {
 
     @FXML
     private void abrirformulario(ActionEvent event) throws IOException {
-        if(data.cantidad>Integer.parseInt(cant.getText())){
+        if(data.cantidad>=Integer.parseInt(cant.getText())){
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vistas/formulario_compra.fxml"));
         Parent root = loader.load();
         controlador_compra controller = loader.getController();
@@ -98,6 +102,18 @@ public class controlador_infoproducto implements Initializable {
             alerta.setContentText("No hay productos suficientes para su pedido");
             alerta.showAndWait();
         }
+    }
+
+    @FXML
+    private void agregarcarrito(ActionEvent event) {
+        producto copia =new producto (data.idp,data.nombre,data.precio,data.imagen,0);
+        modelo.agregarCarrito(copia);
+        System.out.println("Producto agregado");
+    }
+
+    @FXML
+    private void inicio(ActionEvent event) {
+        modelo.cambioventana("/Vistas/vista_usuario.fxml", event, this.modelo);
     }
     
 }

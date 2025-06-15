@@ -4,11 +4,14 @@
  */
 package Controladores;
 
+import Modelo.Nodo_LS;
 import Modelo.historial;
 import Modelo.producto;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -46,13 +49,39 @@ public class controlador_compra implements Initializable {
     }    
 
     @FXML
-    private void guardarpago(ActionEvent event) {
-        String[] n={data.nombre};
+    private void guardarpagounitario(ActionEvent event) {
+        String[] n={data.idp};
         historial credenciales = new historial(modelo.actual.idu,fecha(),address.getText(),n,(data.precio*data.cantidad));
         System.out.println(data.precio*data.cantidad);
         System.out.println(data.cantidad);
         System.out.println(data.precio);
         modelo.compraunitaria(credenciales);
+        Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+        alerta.setHeaderText(null);
+        alerta.setTitle("Compra exitosa");
+        alerta.setContentText("Los productos llegaran a su destino algun dia...");
+        alerta.showAndWait();
+        Object eventSource = event.getSource();
+        Node sourceNode = (Node)eventSource;
+        Scene old = sourceNode.getScene();
+        Window ventana = old.getWindow();
+        Stage stage = (Stage)ventana;
+        stage.hide();
+    }
+    
+    private void guardarpagocarrito(ActionEvent event) {
+        List<String> acumulador = new ArrayList();
+        Nodo_LS <producto> nombres = modelo.tope_c;
+        while(nombres!=null){
+            acumulador.add(nombres.dato.idp);
+            nombres=nombres.sig;
+        }
+        String[] n = acumulador.toArray(new String [0]);
+        historial credenciales = new historial(modelo.actual.idu,fecha(),address.getText(),n,(data.precio*data.cantidad));
+        System.out.println(data.precio*data.cantidad);
+        System.out.println(data.cantidad);
+        System.out.println(data.precio);
+        modelo.compramultiple(credenciales);
         Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
         alerta.setHeaderText(null);
         alerta.setTitle("Compra exitosa");
@@ -76,6 +105,9 @@ public class controlador_compra implements Initializable {
     public void ModeloCompartido(metodos_generales modelo, producto p) {
     this.modelo = modelo;
     this.data=p;
+}
+    public void ModeloCompartido(metodos_generales modelo) {
+    this.modelo = modelo;
 }
     
 }

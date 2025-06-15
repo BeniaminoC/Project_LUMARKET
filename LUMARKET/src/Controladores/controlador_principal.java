@@ -103,8 +103,8 @@ public class controlador_principal implements Initializable {
     
     public void ModeloCompartido(metodos_generales modelo) {
     this.modelo = modelo;
-     modelo.antiduplicados();
-     cargarPagina(); 
+    modelo.antiduplicados();
+    cargarPagina(); 
 }
     
 }

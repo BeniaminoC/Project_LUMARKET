@@ -37,7 +37,7 @@ public class controlador_deseos implements Initializable {
     private void cargarFavs() {
     favlist.getChildren().clear();
     modelo.cargarFavoritos(modelo.actual.idu);
-    Nodo_LD <producto> aux = modelo.cab_d;
+    Nodo_LD <producto> aux = modelo.cab_f;
     
     while (aux!=null) {
         try {

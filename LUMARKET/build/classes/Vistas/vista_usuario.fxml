@@ -93,7 +93,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button layoutX="593.0" layoutY="19.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="46.0" style="-fx-background-color: transparent;">
+                  <Button fx:id="carrito" layoutX="593.0" layoutY="19.0" mnemonicParsing="false" onAction="#abrircarrito" prefHeight="31.0" prefWidth="46.0" style="-fx-background-color: transparent;">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>

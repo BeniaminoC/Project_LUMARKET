@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -10,43 +11,58 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="581.0" prefWidth="687.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.controlador_usuario">
+<BorderPane prefHeight="581.0" prefWidth="687.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.controlador_carrito">
    <center>
       <AnchorPane id="AnchorPane" prefHeight="449.0" prefWidth="577.0">
          <children>
-            <AnchorPane layoutY="-2.0" prefHeight="429.0" prefWidth="718.0">
+            <Label layoutX="39.0" layoutY="21.0" />
+            <HBox layoutX="70.0" layoutY="27.0" prefHeight="21.0" prefWidth="276.0" spacing="30.0">
                <children>
-                  <Pane layoutX="14.0" layoutY="67.0" prefHeight="131.0" prefWidth="558.0" style="-fx-background-color: #808080;" />
-                  <Pane layoutX="611.0" layoutY="67.0" prefHeight="131.0" prefWidth="55.0" style="-fx-background-color: #808080;" />
-                  <HBox fx:id="usercatalogo" layoutX="53.0" layoutY="268.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="621.0" spacing="20.0" style="-fx-border-color: #808080; -fx-background-radius: 25; -fx-border-radius: 25;">
-                     <padding>
-                        <Insets bottom="5.0" left="20.0" top="5.0" />
-                     </padding>
-                  </HBox>
-                  <Button fx:id="atras" layoutY="325.0" mnemonicParsing="false" onAction="#retroceder" style="-fx-background-color: transparent;">
-                     <graphic>
-                        <ImageView fitHeight="37.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Imagenes/Iconos/flechaizq.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-                  <Button fx:id="adelante" layoutX="675.0" layoutY="325.0" mnemonicParsing="false" onAction="#avanzar" style="-fx-background-color: transparent;">
-                     <graphic>
-                        <ImageView fitHeight="38.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Imagenes/Iconos/flechader.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
+                  <Label text="Compras" textFill="FORESTGREEN">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label text="&gt;">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="21.0" prefWidth="140.0" text="Carrito de compras" textFill="FORESTGREEN">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <ScrollPane fitToWidth="true" layoutX="45.0" layoutY="68.0" prefHeight="319.0" prefWidth="423.0" style="-fx-border-color: transparent;">
+               <content>
+                  <VBox fx:id="llenarcarrito" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="309.0" prefWidth="415.0" />
+               </content>
+            </ScrollPane>
+            <AnchorPane layoutX="488.0" layoutY="89.0" prefHeight="143.0" prefWidth="200.0">
+               <children>
+                  <StackPane layoutX="16.0" layoutY="14.0" prefHeight="24.0" prefWidth="167.0">
+                     <children>
+                        <Label text="Productos" StackPane.alignment="CENTER_LEFT" />
+                        <Label fx:id="total" text="\$$$" StackPane.alignment="CENTER_RIGHT" />
+                     </children>
+                  </StackPane>
+                  <StackPane layoutX="16.0" layoutY="47.0" prefHeight="24.0" prefWidth="167.0">
+                     <children>
+                        <Label text="0%" StackPane.alignment="CENTER_RIGHT" />
+                        <Label prefHeight="17.0" prefWidth="67.0" text="Descuento" StackPane.alignment="CENTER_LEFT" />
+                     </children>
+                  </StackPane>
+                  <Button fx:id="hacerpago" layoutX="12.0" layoutY="92.0" mnemonicParsing="false" onAction="#abrirformulario" prefHeight="31.0" prefWidth="175.0" style="-fx-background-color: #ed933a;" text="Continuar pago" textFill="WHITE" />
                </children>
             </AnchorPane>
-         </children>
-      </AnchorPane>
+            <Button layoutX="497.0" layoutY="68.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="114.0" style="-fx-background-color: #ed933a;" text="Resumen compra" textFill="WHITE" />
+         </children></AnchorPane>
    </center>
    <bottom>
       <Pane prefHeight="58.0" prefWidth="643.0" style="-fx-background-color: #D3A468;" BorderPane.alignment="CENTER" />
@@ -75,7 +91,7 @@
                         </Button>
                      </children>
                   </StackPane>
-                  <Button fx:id="fav" layoutX="642.0" layoutY="22.0" mnemonicParsing="false" onAction="#abrir" style="-fx-background-color: transparent;">
+                  <Button layoutX="642.0" layoutY="22.0" mnemonicParsing="false" style="-fx-background-color: transparent;">
                      <graphic>
                         <ImageView fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -93,7 +109,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="carrito" layoutX="593.0" layoutY="19.0" mnemonicParsing="false" onAction="#abrircarrito" prefHeight="31.0" prefWidth="46.0" style="-fx-background-color: transparent;">
+                  <Button layoutX="593.0" layoutY="19.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="46.0" style="-fx-background-color: transparent;">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>

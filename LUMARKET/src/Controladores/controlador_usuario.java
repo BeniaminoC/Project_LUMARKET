@@ -39,6 +39,8 @@ public class controlador_usuario implements Initializable {
     private Button adelante;
     @FXML
     private Button fav;
+    @FXML
+    private Button carrito;
 
     /**
      * Initializes the controller class.
@@ -79,7 +81,7 @@ public class controlador_usuario implements Initializable {
             productoVBox.setOnMouseClicked(e -> {
                 modelo.datosProducto("/Vistas/vista_infoproducto.fxml", prod,modelo);
                 Stage ventanaActual = (Stage) ((Node) e.getSource()).getScene().getWindow();
-        ventanaActual.close();
+                ventanaActual.close();
             });
             usercatalogo.getChildren().add(productoVBox);
         } catch (IOException e) {
@@ -96,6 +98,11 @@ public class controlador_usuario implements Initializable {
     @FXML
     private void abrir(ActionEvent event) {
         modelo.cambioventana("/Vistas/vista_deseos.fxml", event,this.modelo);
+    }
+
+    @FXML
+    private void abrircarrito(ActionEvent event) {
+        modelo.cambioventana("/Vistas/vista_carrito.fxml", event,this.modelo);
     }
     
 }

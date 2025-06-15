@@ -32,6 +32,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -41,7 +42,8 @@ public class metodos_generales {
     
     public metodos_generales(){ 
         cab_s=null; 
-        cab_d=null;
+        cab_f=null;
+        tope_c=null;
         actual=null;
     }
     
@@ -71,6 +73,8 @@ public class metodos_generales {
             ((controlador_usuario) controlador).ModeloCompartido(modelo);
         }else if (controlador instanceof controlador_deseos) {
             ((controlador_deseos) controlador).ModeloCompartido(modelo);
+        }else if (controlador instanceof controlador_carrito) {
+            ((controlador_carrito) controlador).ModeloCompartido(modelo);
         }
         
         Scene scene = new Scene(root);
@@ -199,7 +203,27 @@ public class metodos_generales {
         e.printStackTrace();
     }
 }
+    
+    public void datosCarrito(String direccion, producto prodSelected, metodos_generales modelo) {
+    try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(direccion));
+        Parent root = loader.load();
+        controlador_infoproducto controller = loader.getController();
+        controller.ModeloCompartido(modelo, prodSelected);
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
 
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+
+    public void agregarCarrito(producto p){
+        if (BuscarId(p.idp)==null){
+            Push(p);
+        }
+    }
 
     //Metodos lista sencilla
     public Nodo_LS<producto> cab_s;
@@ -218,6 +242,31 @@ public class metodos_generales {
                 actual = actual.sig;
             }
             actual.sig  = nuevo;
+        }
+    }
+    
+        public producto buscarProductoPorID(String id) {
+    Nodo_LS <producto> actual = cab_s;
+    while (actual != null) {
+        if (actual.dato.idp.equals(id)) {
+            return actual.dato;
+        }
+        actual = actual.sig;
+    }
+    return null;
+}
+        
+    public Nodo_LS<producto> BuscarCatalogo(String idE){
+        if(listaSenVacia()) return null;
+        else{
+            Nodo_LS<producto> p=cab_s;
+            do{
+                if(p.dato.idp.equals(idE))
+                    return p;
+                else
+                    p=p.sig;
+            }while(p!=cab_s);
+            return null;
         }
     }
     
@@ -327,16 +376,17 @@ public class metodos_generales {
     
     //Metodos lista doble
     
-    public Nodo_LD<producto> cab_d;
+    public Nodo_LD<producto> cab_f;
+    
     
     public boolean listaVaciaDob(){ 
-        return cab_d==null?true:false; 
+        return cab_f==null?true:false; 
     }
     
     public Nodo_LD<producto> Ultimo(){
         if(listaVaciaDob()) return null;
         else{
-            Nodo_LD<producto> p=cab_d;
+            Nodo_LD<producto> p=cab_f;
             while(p.sig!=null)
                 p=p.sig;
             return p;
@@ -348,28 +398,17 @@ public class metodos_generales {
         if(temp!=null){
             Nodo_LD<producto> info = new Nodo_LD(temp);
             if(listaVaciaDob())
-                cab_d=info;
+                cab_f=info;
             else{
-                info.sig = cab_d;
-                cab_d.ant = info;
-                cab_d = info;
+                info.sig = cab_f;
+                cab_f.ant = info;
+                cab_f = info;
             }
             return true;
         }else{
             return false;
         }
     }
-    
-    public producto buscarProductoPorID(String id) {
-    Nodo_LS <producto> actual = cab_s;
-    while (actual != null) {
-        if (actual.dato.idp.equals(id)) {
-            return actual.dato;
-        }
-        actual = actual.sig;
-    }
-    return null;
-}
 
     
     public void cargarFavoritos(String userId) {
@@ -407,5 +446,117 @@ public class metodos_generales {
                 alerta.showAndWait(); 
         } 
     }
+    
+    public void compramultiple(historial h){
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/Archivos/historiales.txt", true))) {
+            String campoArray = String.join(";", h.articulos);
+            String linea = String.join(",",h.id,h.fecha,h.direccion,campoArray,String.valueOf(h.total));
+
+            writer.write(linea);
+            writer.newLine();
+        
+    } catch (IOException e) {
+        e.printStackTrace();
+        return;
+        }
+
+    }
+    
+    //Metodos para colas
+    
+    public Nodo_LS<producto> tope_c;
+    
+    public boolean CarritoVacio(){ 
+        return tope_c==null?true:false;
+    }
+    
+    public Nodo_LS<producto> Base(){
+        if(CarritoVacio()) return null;
+        else{
+            Nodo_LS<producto> p=tope_c;
+            while(p.sig!=tope_c)
+                p=p.sig;
+            return p;
+        }
+    }
+    
+    public Nodo_LS<producto> AntesNodo(Nodo_LS<producto> p){
+        if(CarritoVacio()) return null;
+        else{
+            Nodo_LS<producto> q=tope_c;
+            while(q.sig!=p)
+                q=q.sig;
+            return q;
+        }
+    }
+    
+    public Nodo_LS<producto> BuscarId(String idE){
+        if(CarritoVacio()) return null;
+        else{
+            Nodo_LS<producto> p=tope_c;
+            while(p!=null){
+                if(p.dato.idp.equals(idE))
+                    return p;
+                else
+                    p=p.sig;
+            }
+            return null;
+        }
+    }
+    
+    public boolean Push(producto p){
+        if(p!=null){
+            producto copia = new producto(p.idp,p.nombre,p.precio,p.imagen,0);
+            Nodo_LS<producto> info = new Nodo_LS(copia);
+            if(CarritoVacio()){
+                tope_c=info;
+            }else{
+                info.sig = tope_c;
+                tope_c=info;
+            }
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    public void Pop(){
+        if(CarritoVacio()){
+            JOptionPane.showMessageDialog(null, 
+                "La pila esta vacíá!!");
+        }
+        else if(tope_c.sig==tope_c){
+            tope_c=null;
+        }else{
+            Nodo_LS<producto> base=Base(), e=tope_c;
+            tope_c=tope_c.sig;
+            base.sig=tope_c;
+            e.sig=null;
+            e=null;
+            JOptionPane.showMessageDialog(null, 
+                "Elemento atendido!!");
+        }
+    }
+    
+    public void eliminarProdCarrito(String idProducto) {
+    if (tope_c != null){
+
+    if (tope_c.dato.idp.equals(idProducto)) {
+        tope_c = tope_c.sig;
+    }
+
+    Nodo_LS<producto> anterior = tope_c;
+    Nodo_LS<producto> actual  = tope_c.sig;
+    while (actual != null) {
+        if (actual.dato.idp.equals(idProducto)) {
+            anterior.sig = actual.sig;
+        }
+        anterior = actual;
+        actual   = actual.sig;
+    }}
+
+}
+ 
+
     
 }
