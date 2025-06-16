@@ -94,4 +94,8 @@ public class controlador_carrito_prod implements Initializable {
         padre.actualizarTotal();
     }
     
+    public void defecto(){
+        name.setText("No hay productos agregados");
+    }
+    
 }

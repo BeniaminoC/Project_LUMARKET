@@ -50,18 +50,19 @@ public class controlador_carrito implements Initializable {
     private void abrirformulario(ActionEvent event) throws IOException {
         Nodo_LS <producto>recorrido = modelo.tope_c;
         while(recorrido!=null){
+        Nodo_LS <producto>cat = modelo.BuscarCatalogo(recorrido.dato.idp);
+        
+        int c=cat.dato.cantidad-recorrido.dato.cantidad;
+        modelo.actualizarArchivoCantidad(cat.dato.idp, c);
+        recorrido=recorrido.sig;
+        }
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vistas/formulario_compra.fxml"));
         Parent root = loader.load();
         controlador_compra controller = loader.getController();
-        Nodo_LS <producto>cat = modelo.BuscarCatalogo(recorrido.dato.idp);
-        modelo.actualizarcantidad(recorrido.dato.cantidad, recorrido.dato.idp);
-        int c=cat.dato.cantidad-recorrido.dato.cantidad;
-        modelo.actualizarArchivo(cat.dato.idp, c);
-        controller.ModeloCompartido(modelo);
+        controller.ModeloCompartido(modelo,this);
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.show();
-    }
     }
     
     public void ModeloCompartido(metodos_generales modelo) {
@@ -73,30 +74,46 @@ public class controlador_carrito implements Initializable {
     public void cargarcarrito(){
     llenarcarrito.getChildren().clear();
     Nodo_LS<producto> actual = modelo.tope_c;
-    while (actual != null) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vistas/carrito_prod.fxml"));
-            HBox productoHBox = loader.load();
-            controlador_carrito_prod controller = loader.getController();
-            controller.agregarencarrito(actual.dato, this);
-            llenarcarrito.getChildren().add(productoHBox);
-        } catch (IOException e) {
-            e.printStackTrace();
+    if (actual!=null){
+        while (actual != null) {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vistas/carrito_prod.fxml"));
+                HBox productoHBox = loader.load();
+                controlador_carrito_prod controller = loader.getController();
+                controller.agregarencarrito(actual.dato, this);
+                llenarcarrito.getChildren().add(productoHBox);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            actual = actual.sig;
         }
-        actual = actual.sig;
+    }else{
+        try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vistas/carrito_prod.fxml"));
+                HBox productoHBox = loader.load();
+                controlador_carrito_prod controller = loader.getController();
+                controller.defecto();
+                llenarcarrito.getChildren().add(productoHBox);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
     }
 }
     
     public void actualizarTotal() {
     double suma = 0;
-    Nodo_LS <producto>actual = modelo.tope_c;  
-    while (actual != null) {
-        producto p = actual.dato;
-        int qty = p.cantidad;
-        suma = suma+(p.precio * qty);
-        actual = actual.sig;
+    Nodo_LS <producto>actual = modelo.tope_c; 
+    if (actual!=null){
+        while (actual != null) {
+            producto p = actual.dato;
+            int qty = p.cantidad;
+            suma = suma+(p.precio * qty);
+            actual = actual.sig;
+        }
+        total.setText(String.valueOf(suma));
+    }else{
+        total.setText(String.valueOf(suma));
     }
-    total.setText(String.valueOf(suma));
 }
 
     

@@ -14,6 +14,7 @@ public class producto {
     public float precio;
     public String imagen;
     public int cantidad;
+    public String descripcion;
 
     public producto(String idp, String nombre, float precio, String imagen, int cantidad) {
         this.idp = idp;
@@ -22,5 +23,16 @@ public class producto {
         this.imagen = imagen;
         this.cantidad = cantidad;
     }
+
+    public producto(String idp, String nombre, float precio, String imagen, int cantidad, String descripcion) {
+        this.idp = idp;
+        this.nombre = nombre;
+        this.precio = precio;
+        this.imagen = imagen;
+        this.cantidad = cantidad;
+        this.descripcion = descripcion;
+    }
+    
+    
     
 }

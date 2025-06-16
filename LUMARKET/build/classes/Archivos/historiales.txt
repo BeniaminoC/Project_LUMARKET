@@ -1,4 +1,3 @@
-U4,13/06/2025,ceerte,Auriculares electrónicos con cancelación de ruido,0.0
-U4,13/06/2025,cerete,Auriculares electrónicos con cancelación de ruido,143000.0
-U4,13/06/2025, ,Auriculares electrónicos con cancelación de ruido,286000.0
-U4,13/06/2025,emiratos arabes unidos,Refrigerador Puerta Francesa Elegante,2100000.0
+U4,15/06/2025,ElDorado,P2;P8,760000.0
+U4,15/06/2025,TheGolden,P5;P4,163000.0
+U4,15/06/2025,LaPlata,P6;P7,649900.0

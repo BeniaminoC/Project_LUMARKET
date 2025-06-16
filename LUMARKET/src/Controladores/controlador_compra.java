@@ -39,6 +39,8 @@ public class controlador_compra implements Initializable {
     private metodos_generales modelo;
     
     private producto data;
+    
+    private Object padre;
 
     /**
      * Initializes the controller class.
@@ -48,7 +50,7 @@ public class controlador_compra implements Initializable {
         // TODO
     }    
 
-    @FXML
+    
     private void guardarpagounitario(ActionEvent event) {
         String[] n={data.idp};
         historial credenciales = new historial(modelo.actual.idu,fecha(),address.getText(),n,(data.precio*data.cantidad));
@@ -77,10 +79,7 @@ public class controlador_compra implements Initializable {
             nombres=nombres.sig;
         }
         String[] n = acumulador.toArray(new String [0]);
-        historial credenciales = new historial(modelo.actual.idu,fecha(),address.getText(),n,(data.precio*data.cantidad));
-        System.out.println(data.precio*data.cantidad);
-        System.out.println(data.cantidad);
-        System.out.println(data.precio);
+        historial credenciales = new historial(modelo.actual.idu,fecha(),address.getText(),n,Total());
         modelo.compramultiple(credenciales);
         Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
         alerta.setHeaderText(null);
@@ -95,6 +94,15 @@ public class controlador_compra implements Initializable {
         stage.hide();
     }
     
+    @FXML
+    private void guardarpago(ActionEvent event){
+        if (padre instanceof controlador_infoproducto) {
+            guardarpagounitario(event);
+        }else if (padre instanceof controlador_carrito) {
+            guardarpagocarrito(event);
+        }
+    }
+    
     private String fecha(){
         LocalDate hoy = LocalDate.now();
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -102,12 +110,30 @@ public class controlador_compra implements Initializable {
         return fecha;
     }
     
-    public void ModeloCompartido(metodos_generales modelo, producto p) {
+    public void ModeloCompartido(metodos_generales modelo, producto p, Object dad) {
     this.modelo = modelo;
     this.data=p;
+    padre=dad;
 }
-    public void ModeloCompartido(metodos_generales modelo) {
+    public void ModeloCompartido(metodos_generales modelo, Object dad) {
     this.modelo = modelo;
+    padre=dad;
+}
+    
+    public float Total() {
+    double suma = 0;
+    Nodo_LS <producto>actual = modelo.tope_c; 
+    if (actual!=null){
+        while (actual != null) {
+            producto p = actual.dato;
+            int qty = p.cantidad;
+            suma = suma+(p.precio * qty);
+            actual = actual.sig;
+        }
+        return (float)suma;
+    }else{
+        return (float)suma;
+    }
 }
     
 }

@@ -28,6 +28,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -43,6 +44,7 @@ public class metodos_generales {
     public metodos_generales(){ 
         cab_s=null; 
         cab_f=null;
+        cab_h=null;
         tope_c=null;
         actual=null;
     }
@@ -50,12 +52,17 @@ public class metodos_generales {
     usuario actual;
     
     public void cambioventana (String direccion, ActionEvent evento, metodos_generales modelo){
-        
         try {
+        Window ventana=null;
         Object eventSource = evento.getSource();
+        if(eventSource instanceof Node nodo){
         Node sourceNode = (Node)eventSource;
         Scene old = sourceNode.getScene();
-        Window ventana = old.getWindow();
+        ventana = old.getWindow();
+        }else if(eventSource instanceof MenuItem item){
+                ventana = item.getParentPopup().getOwnerWindow();
+                }
+        
         Stage stage = (Stage)ventana;
         stage.hide();
         
@@ -75,6 +82,10 @@ public class metodos_generales {
             ((controlador_deseos) controlador).ModeloCompartido(modelo);
         }else if (controlador instanceof controlador_carrito) {
             ((controlador_carrito) controlador).ModeloCompartido(modelo);
+        }else if (controlador instanceof controlador_historial) {
+            ((controlador_historial) controlador).ModeloCompartido(modelo);
+        }else if (controlador instanceof controlador_admin) {
+            ((controlador_admin) controlador).ModeloCompartido(modelo);
         }
         
         Scene scene = new Scene(root);
@@ -136,19 +147,64 @@ public class metodos_generales {
         }
     }
     
+    public boolean ConsultarProducto(String ubicacion, String registro) {
+    try (BufferedReader reader = new BufferedReader(new FileReader(ubicacion))) {
+        String linea;
+        while ((linea = reader.readLine()) != null) {
+            String[] bloques = linea.split(",");
+            if (bloques.length == 5) {
+                String nombre =bloques[1];
+                if (nombre.equals(registro)) {
+                    return false;
+                }
+            }
+        }
+    } catch (IOException e) {
+        Alert alerta = new Alert(Alert.AlertType.ERROR);
+        alerta.setHeaderText(null);
+        alerta.setTitle("Error");
+        alerta.setContentText("No se pudo leer el archivo");
+        alerta.showAndWait();
+    }
+    return true;
+}
+    
+    public void guardarProducto(producto prod){
+        if(ConsultarProducto("src/Archivos/listaproductos.txt",prod.nombre)){
+        try{
+        BufferedWriter guardar = new BufferedWriter(new FileWriter("src/Archivos/listaproductos.txt", true));
+            String desc = prod.descripcion.contains(",") ? "\"" + prod.descripcion + "\"" : prod.descripcion;
+            guardar.write(prod.idp+","+prod.nombre+","+prod.precio+","+prod.imagen+","+prod.cantidad+","+desc);
+            guardar.newLine();
+            guardar.close();
+            
+            }catch(IOException e){
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                alerta.setHeaderText(null);
+                alerta.setTitle("Error");
+                alerta.setContentText("No se pudo modificar el archivo");
+                alerta.showAndWait(); 
+        } 
+    }
+    }
+    
     public void cargarproductos(){
         try{
         BufferedReader leer = new BufferedReader(new FileReader("src/Archivos/listaproductos.txt"));
         String linea="";
         while ((linea=leer.readLine())!=null){
-            String[] bloques= linea.split(",");
-            if (bloques.length==5){
+            String[] bloques = linea.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+            if (bloques.length==6){
             String id=bloques[0];
             String nombre=bloques[1];
             float precio=Float.parseFloat(bloques[2]);
             String imagen=bloques[3];
             int cant=Integer.parseInt(bloques[4]);
-            producto q=new producto(id,nombre, precio, imagen, cant);
+            String descripcion = bloques[5];
+            if (descripcion.startsWith("\"") && descripcion.endsWith("\"")) {
+                descripcion = descripcion.substring(1, descripcion.length() - 1);
+            }
+            producto q=new producto(id,nombre, precio, imagen, cant,descripcion);
             agregarSen(q);
             System.out.println("Productos cargados: " + tamañoListaSen());
             }
@@ -189,6 +245,35 @@ public class metodos_generales {
         return resultado;
     }
     
+    public void cargarHistoriales(String idUsuario) {
+
+    try (BufferedReader br = new BufferedReader(new FileReader("src/Archivos/historiales.txt"))) {
+        String linea;
+
+        while ((linea = br.readLine()) != null) {
+            String[] partes = linea.split(",");
+            if (partes.length != 5) continue;
+
+            String id = partes[0];
+            if (!id.equals(idUsuario)) continue;
+
+            String fecha = partes[1];
+            String direccion = partes[2];
+            String[] articulos = partes[3].split(";");
+            float total = Float.parseFloat(partes[4]);
+
+            historial h = new historial(id, fecha, direccion, articulos, total);
+            agregarHistorial(h);
+            System.out.println("historial cargado");
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+
+}
+        
+
+    
     public void datosProducto(String direccion, producto prodSelected, metodos_generales modelo) {
     try {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(direccion));
@@ -218,7 +303,7 @@ public class metodos_generales {
         e.printStackTrace();
     }
 }
-
+    
     public void agregarCarrito(producto p){
         if (BuscarId(p.idp)==null){
             Push(p);
@@ -227,6 +312,7 @@ public class metodos_generales {
 
     //Metodos lista sencilla
     public Nodo_LS<producto> cab_s;
+    public Nodo_LS<historial> cab_h;
      
     public boolean listaSenVacia(){ 
         return cab_s==null?true:false; 
@@ -238,6 +324,19 @@ public class metodos_generales {
             cab_s = nuevo;
         } else {
             Nodo_LS actual = cab_s;
+            while (actual.sig != null) {
+                actual = actual.sig;
+            }
+            actual.sig  = nuevo;
+        }
+    }
+    
+    public void agregarHistorial(historial histo) {
+        Nodo_LS nuevo = new Nodo_LS(histo);
+        if (cab_h == null) {
+            cab_h = nuevo;
+        } else {
+            Nodo_LS actual = cab_h;
             while (actual.sig != null) {
                 actual = actual.sig;
             }
@@ -293,7 +392,7 @@ public class metodos_generales {
     }
 }
     
-    public void actualizarArchivo(String idProducto, int nuevaCantidad) {
+    public void actualizarArchivoCantidad(String idProducto, int nuevaCantidad) {
     File archivoOriginal = new File("src/Archivos/listaproductos.txt");
     File archivoTemporal = new File("src/Archivos/temp_productos.txt");
 
@@ -506,7 +605,7 @@ public class metodos_generales {
     
     public boolean Push(producto p){
         if(p!=null){
-            producto copia = new producto(p.idp,p.nombre,p.precio,p.imagen,0);
+            producto copia = new producto(p.idp,p.nombre,p.precio,p.imagen,0,p.descripcion);
             Nodo_LS<producto> info = new Nodo_LS(copia);
             if(CarritoVacio()){
                 tope_c=info;
@@ -522,8 +621,6 @@ public class metodos_generales {
     
     public void Pop(){
         if(CarritoVacio()){
-            JOptionPane.showMessageDialog(null, 
-                "La pila esta vacíá!!");
         }
         else if(tope_c.sig==tope_c){
             tope_c=null;
@@ -533,8 +630,6 @@ public class metodos_generales {
             base.sig=tope_c;
             e.sig=null;
             e=null;
-            JOptionPane.showMessageDialog(null, 
-                "Elemento atendido!!");
         }
     }
     
@@ -557,6 +652,12 @@ public class metodos_generales {
 
 }
  
-
+    public void cerrarsesion(){
+        actual=null;
+        cab_f=null;
+        cab_h=null;
+        tope_c=null;
+        actual=null;
+    }
     
 }

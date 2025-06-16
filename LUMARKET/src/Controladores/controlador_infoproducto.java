@@ -17,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -36,7 +37,7 @@ public class controlador_infoproducto implements Initializable {
     @FXML
     private Label price;
     @FXML
-    private Label description;
+    private TextArea description;
     @FXML
     private Label stock;
     
@@ -77,6 +78,7 @@ public class controlador_infoproducto implements Initializable {
             cant.setText("No stock");
             cant.setDisable(true);
         }
+        description.setText(data.descripcion);
     }
 
     @FXML
@@ -88,8 +90,8 @@ public class controlador_infoproducto implements Initializable {
         producto Udata= new producto(data.idp,data.nombre,data.precio,data.imagen,(Integer.parseInt(cant.getText())));
         modelo.actualizarcantidad(Udata.cantidad, data.idp);
         int c=data.cantidad-Udata.cantidad;
-        modelo.actualizarArchivo(data.idp, c);
-        controller.ModeloCompartido(modelo, Udata);
+        modelo.actualizarArchivoCantidad(data.idp, c);
+        controller.ModeloCompartido(modelo, Udata, this);
         System.out.println(data.cantidad);
         System.out.println(Udata.cantidad);
         Stage stage = new Stage();
