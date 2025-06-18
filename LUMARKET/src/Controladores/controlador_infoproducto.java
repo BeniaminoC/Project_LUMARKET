@@ -7,18 +7,22 @@ package Controladores;
 import Modelo.producto;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Side;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -52,6 +56,10 @@ public class controlador_infoproducto implements Initializable {
     private Button b_carrito;
     @FXML
     private Button logo;
+    @FXML
+    private ContextMenu H;
+    @FXML
+    private Button Options;
 
     /**
      * Initializes the controller class.
@@ -83,39 +91,97 @@ public class controlador_infoproducto implements Initializable {
 
     @FXML
     private void abrirformulario(ActionEvent event) throws IOException {
-        if(data.cantidad>=Integer.parseInt(cant.getText())){
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vistas/formulario_compra.fxml"));
-        Parent root = loader.load();
-        controlador_compra controller = loader.getController();
-        producto Udata= new producto(data.idp,data.nombre,data.precio,data.imagen,(Integer.parseInt(cant.getText())));
-        modelo.actualizarcantidad(Udata.cantidad, data.idp);
-        int c=data.cantidad-Udata.cantidad;
-        modelo.actualizarArchivoCantidad(data.idp, c);
-        controller.ModeloCompartido(modelo, Udata, this);
-        System.out.println(data.cantidad);
-        System.out.println(Udata.cantidad);
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.show();
+        if (modelo.actual!=null){
+            if(data.cantidad>=Integer.parseInt(cant.getText())){
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Vistas/formulario_compra.fxml"));
+            Parent root = loader.load();
+            controlador_compra controller = loader.getController();
+            producto Udata= new producto(data.idp,data.nombre,data.precio,data.imagen,(Integer.parseInt(cant.getText())));
+            modelo.actualizarcantidad(Udata.cantidad, data.idp);
+            int c=data.cantidad-Udata.cantidad;
+            modelo.actualizarArchivoCantidad(data.idp, c);
+            controller.ModeloCompartido(modelo, Udata, this);
+            System.out.println(data.cantidad);
+            System.out.println(Udata.cantidad);
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+            }else{
+                Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
+                alerta.setHeaderText(null);
+                alerta.setTitle("Stock insuficiente");
+                alerta.setContentText("No hay productos suficientes para su pedido");
+                alerta.showAndWait();
+            }
         }else{
-            Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
-            alerta.setHeaderText(null);
-            alerta.setTitle("Stock insuficiente");
-            alerta.setContentText("No hay productos suficientes para su pedido");
-            alerta.showAndWait();
+            modelo.cambioventana("/Vistas/vista_signup.fxml", event,this.modelo);
         }
     }
 
     @FXML
     private void agregarcarrito(ActionEvent event) {
-        producto copia =new producto (data.idp,data.nombre,data.precio,data.imagen,0);
-        modelo.agregarCarrito(copia);
-        System.out.println("Producto agregado");
+        if (modelo.actual!=null){
+            producto copia =new producto (data.idp,data.nombre,data.precio,data.imagen,0);
+            modelo.agregarCarrito(copia);
+            System.out.println("Producto agregado");
+        }else{
+            modelo.cambioventana("/Vistas/vista_signup.fxml", event,this.modelo);
+        }
     }
 
     @FXML
     private void inicio(ActionEvent event) {
         modelo.cambioventana("/Vistas/vista_usuario.fxml", event, this.modelo);
+    }
+
+        @FXML
+    private void abrirhistorial(ActionEvent event) {
+        modelo.cambioventana("/Vistas/vista_historial.fxml", event,this.modelo);
+    }
+
+    @FXML
+    private void mostraropciones(ActionEvent event) {
+        H.show(Options, Side.BOTTOM,0,0);
+    }
+
+    @FXML
+    private void crearproducto(ActionEvent event) {
+    TextInputDialog dialogo = new TextInputDialog();
+    dialogo.setTitle("Código de Acceso");
+    dialogo.setHeaderText("Ingrese el código para continuar");
+    dialogo.setContentText("Código:");
+
+    Optional<String> resultado = dialogo.showAndWait();
+
+    if (resultado.isPresent()) {
+        String codigoIngresado = resultado.get();
+        String codigoCorrecto = "1234";
+
+        if (codigoIngresado.equals(codigoCorrecto)) {
+            modelo.cambioventana("/Vistas/vista_admin.fxml", event,this.modelo);
+        } else {
+            Alert alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setTitle("Error de acceso");
+            alerta.setHeaderText(null);
+            alerta.setContentText("Código incorrecto. Intente nuevamente.");
+            alerta.showAndWait();
+        }
+    }
+    }
+
+    @FXML
+    private void salir(ActionEvent event) {
+        modelo.cerrarsesion();
+        modelo.cambioventana("/Vistas/vista_principal.fxml", event,this.modelo);
+    }
+
+    @FXML
+    private void abrir(ActionEvent event) {
+        modelo.cambioventana("/Vistas/vista_deseos.fxml", event,this.modelo);
+    }
+
+    @FXML
+    private void abrircarrito(ActionEvent event) {
     }
     
 }

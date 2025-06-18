@@ -60,6 +60,7 @@ public class controlador_login implements Initializable {
         alerta.setTitle("Exito");
         alerta.setContentText("iniciando sesion");
         alerta.showAndWait();
+        modelo.cargarFavoritos(modelo.actual.idu);
         modelo.cambioventana("/Vistas/vista_usuario.fxml", event,this.modelo);
         }else{
         Alert alerta = new Alert(Alert.AlertType.ERROR);

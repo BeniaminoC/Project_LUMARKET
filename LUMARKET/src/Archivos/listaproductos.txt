@@ -8,4 +8,4 @@ P7,Ratón óptico logitech g305 lightpeed,199900,/Imagenes/Productos/mouse.jpg,7
 P8,Refrigerador Puerta Francesa Elegante,700000,/Imagenes/Productos/refrigerador.png,8,"Nuevo 28 Cu. Pie. Refrigerador de puerta francesa de 4 puertas con compresor 21,5 para el hogar"
 P9,Maquinillas de afeitar eléctricas y cortadoras de cabello philips,269000,/Imagenes/Productos/rasuradora.jpg,9,"VGR 387 Afeitadora eléctrica en seco y húmedo para hombres, Afeitadora eléctrica rotativa para Barba, Kit de aseo, pantalla LCD recargable"
 P10,iphone,550000,/Imagenes/Productos/Iphone.jpg,12,"pues un iphone"
-P100,iPhone16 pro max,6000000.0,/Imagenes/Productos/Iphone.jpg,14,"Celular Iphone totalmente nuevo. Bateria en perfecto estado con espacio para dos tarjetas sims"
+P100,iPhone16 pro max,6000000,/Imagenes/Productos/Iphone.jpg,14,"Celular Iphone totalmente nuevo. Bateria en perfecto estado con espacio para dos tarjetas sims"

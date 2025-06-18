@@ -58,7 +58,7 @@
          <children>
             <AnchorPane prefHeight="96.0" prefWidth="627.0">
                <children>
-                  <ImageView fitHeight="72.0" fitWidth="153.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="72.0" fitWidth="153.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Imagenes/Iconos/icono.png" />
                      </image>

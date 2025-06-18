@@ -94,6 +94,11 @@ public class controlador_principal implements Initializable {
             VBox productoVBox = loader.load();
             controlador_producto controller = loader.getController();
             controller.agregarproducto(prod);
+            productoVBox.setOnMouseClicked(e -> {
+                modelo.datosProducto("/Vistas/vista_infoproducto.fxml", prod,modelo);
+                Stage ventanaActual = (Stage) ((Node) e.getSource()).getScene().getWindow();
+                ventanaActual.close();
+            });
             homecatalogo.getChildren().add(productoVBox);
         } catch (IOException e) {
             e.printStackTrace();

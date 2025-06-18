@@ -44,7 +44,7 @@
                         <Insets left="20.0" top="30.0" />
                      </padding>
                   </Button>
-                  <Button fx:id="delete" mnemonicParsing="false" style="-fx-background-color: transparent;" text="Eliminar" textFill="#29ab87">
+                  <Button fx:id="delete" mnemonicParsing="false" onAction="#borrar" style="-fx-background-color: transparent;" text="Eliminar" textFill="#29ab87">
                      <padding>
                         <Insets left="40.0" top="30.0" />
                      </padding>

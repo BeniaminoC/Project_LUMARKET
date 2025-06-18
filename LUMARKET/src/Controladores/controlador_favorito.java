@@ -7,6 +7,7 @@ package Controladores;
 import Modelo.producto;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -31,6 +32,9 @@ public class controlador_favorito implements Initializable {
     private Button agg;
     @FXML
     private Button delete;
+    
+    public controlador_deseos padre;
+    public producto date;
 
     /**
      * Initializes the controller class.
@@ -40,11 +44,23 @@ public class controlador_favorito implements Initializable {
         // TODO
     }    
     
-    public void agregarfavorito(producto n){
+    public void agregarfavorito(producto n, controlador_deseos dad){
         favname.setText(n.nombre);
         cost.setText(String.valueOf(n.precio)+"$");
         Image img = new Image(getClass().getResource(n.imagen).toExternalForm());
         foto.setImage(img);
+        date = n;
+        padre=dad;
+    }
+    
+    public void defecto (){
+        favname.setText("No hay productos agregados");
+    }
+    
+    @FXML
+    private void borrar(ActionEvent event) {
+        padre.modelo.eliminarfavorito(date.idp);
+        padre.cargarFavs();
     }
     
 }

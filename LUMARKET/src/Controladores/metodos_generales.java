@@ -174,7 +174,8 @@ public class metodos_generales {
         try{
         BufferedWriter guardar = new BufferedWriter(new FileWriter("src/Archivos/listaproductos.txt", true));
             String desc = prod.descripcion.contains(",") ? "\"" + prod.descripcion + "\"" : prod.descripcion;
-            guardar.write(prod.idp+","+prod.nombre+","+prod.precio+","+prod.imagen+","+prod.cantidad+","+desc);
+            String precio = (prod.precio % 1 == 0) ? String.valueOf((int) prod.precio) : String.valueOf(prod.precio);
+            guardar.write(prod.idp+","+prod.nombre+","+precio+","+prod.imagen+","+prod.cantidad+","+desc);
             guardar.newLine();
             guardar.close();
             
@@ -530,6 +531,40 @@ public class metodos_generales {
         e.printStackTrace();
     }
 }
+    
+    public boolean eliminarfavorito(String id) {
+    if (cab_f == null) {
+        System.out.println("La lista está vacía");
+        return false;
+    }
+
+    Nodo_LD <producto> actual = cab_f;
+    
+    while (actual != null) {
+        if (actual.dato.idp.equals(id)) {
+            if (actual.ant == null && actual.sig == null) {
+                cab_f = null;
+            }
+            else if (actual.ant == null) {
+                cab_f = actual.sig;
+                cab_f.ant = null;
+            }
+            else if (actual.sig == null) {
+                actual.ant.sig = null;
+            }
+            else {
+                actual.ant.sig = actual.sig;
+                actual.sig.ant = actual.ant;
+            }
+            
+            return true;
+        }
+        actual = actual.sig;
+    }
+    
+    return false;
+}
+
   
     public void compraunitaria(historial h){
         try{

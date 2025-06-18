@@ -70,6 +70,7 @@ public class controlador_signup implements Initializable {
             alerta.setTitle("Exito");
             alerta.setContentText("Bienvenido "+n+" "+lastn);
             alerta.showAndWait();
+            modelo.cargarFavoritos(modelo.actual.idu);
             modelo.cambioventana("/Vistas/vista_usuario.fxml", event,this.modelo);
         }else{
             Alert alerta = new Alert(Alert.AlertType.ERROR);

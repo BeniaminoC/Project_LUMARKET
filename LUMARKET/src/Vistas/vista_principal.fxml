@@ -80,25 +80,7 @@
                         </Button>
                      </children>
                   </StackPane>
-                  <Button layoutX="642.0" layoutY="22.0" mnemonicParsing="false" style="-fx-background-color: transparent;">
-                     <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Imagenes/Iconos/corazon.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
                   <Button fx:id="existente" layoutX="512.0" layoutY="25.0" mnemonicParsing="false" onAction="#entrar" style="-fx-background-color: #ffffff; -fx-border-color: #808080;" text="Ingresar" />
-                  <Button layoutX="593.0" layoutY="19.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="46.0" style="-fx-background-color: transparent;">
-                     <graphic>
-                        <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../Imagenes/Iconos/carrito.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
                   <Button fx:id="nuevo" layoutX="406.0" layoutY="25.0" mnemonicParsing="false" onAction="#crear" style="-fx-background-color: #FFFFFF; -fx-border-color: #808080;" text="Crear Cuenta" />
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ed933a" height="28.0" layoutX="-16.0" layoutY="68.0" stroke="#ed933a" strokeType="INSIDE" width="744.0" />
                </children>
