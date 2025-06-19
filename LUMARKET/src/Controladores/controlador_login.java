@@ -74,5 +74,10 @@ public class controlador_login implements Initializable {
     public void ModeloCompartido(metodos_generales modelo) {
     this.modelo = modelo;
 }   
+
+    @FXML
+    private void volver(ActionEvent event) {
+        modelo.cambioventana("/Vistas/vista_principal.fxml", event, this.modelo);
+    }
     
 }

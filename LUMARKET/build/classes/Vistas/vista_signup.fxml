@@ -14,7 +14,7 @@
 
 <BorderPane prefHeight="581.0" prefWidth="687.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.controlador_signup">
    <center>
-      <AnchorPane id="AnchorPane" prefHeight="449.0" prefWidth="577.0" style="-fx-background-color: #f9f6f2;">
+      <AnchorPane id="AnchorPane" prefHeight="449.0" prefWidth="577.0" style="-fx-background-color: FAF7F3;">
          <children>
             <AnchorPane layoutX="175.0" layoutY="10.0" prefHeight="407.0" prefWidth="361.0" style="-fx-background-color: #ffffff; -fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: #dbdbdb;">
                <children>
@@ -30,7 +30,7 @@
                      </font>
                   </Label>
                   <PasswordField fx:id="contraseña" layoutX="25.0" layoutY="294.0" prefHeight="32.0" prefWidth="311.0" promptText="*********" />
-                  <Button fx:id="crear" layoutX="25.0" layoutY="348.0" mnemonicParsing="false" onAction="#creacionCuenta" prefHeight="32.0" prefWidth="311.0" style="-fx-background-color: #ed9239;" text="Crear cuenta" textAlignment="CENTER" textFill="WHITE">
+                  <Button fx:id="crear" layoutX="25.0" layoutY="348.0" mnemonicParsing="false" onAction="#creacionCuenta" prefHeight="32.0" prefWidth="311.0" style="-fx-background-color: FFBE58;" text="Crear cuenta" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -53,19 +53,23 @@
       </AnchorPane>
    </center>
    <bottom>
-      <Pane prefHeight="58.0" prefWidth="643.0" style="-fx-background-color: #D3A468;" BorderPane.alignment="CENTER" />
+      <Pane prefHeight="58.0" prefWidth="643.0" style="-fx-background-color: #F3E8DB;" BorderPane.alignment="CENTER" />
    </bottom>
    <top>
       <AnchorPane BorderPane.alignment="CENTER">
          <children>
             <AnchorPane prefHeight="96.0" prefWidth="627.0">
                <children>
-                  <ImageView fitHeight="72.0" fitWidth="153.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../Imagenes/Iconos/icono.png" />
-                     </image>
-                  </ImageView>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ed933a" height="28.0" layoutX="-16.0" layoutY="68.0" stroke="#ed933a" strokeType="INSIDE" width="716.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffbe58" height="28.0" layoutX="-16.0" layoutY="68.0" stroke="#ffbe58" strokeType="INSIDE" width="716.0" />
+                  <Button mnemonicParsing="false" onAction="#volver" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fitHeight="72.0" fitWidth="153.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Imagenes/Iconos/icono.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
                </children>
             </AnchorPane>
          </children>

@@ -231,6 +231,11 @@ private void ocultarResultados() {
     contenedor.setVisible(false);
     contenedor.setManaged(false);
 }   
+
+    @FXML
+    private void catalogo(ActionEvent event) {
+        modelo.cambioventana("/Vistas/vista_catalogo.fxml", event,this.modelo);
+    }
     
     
 }

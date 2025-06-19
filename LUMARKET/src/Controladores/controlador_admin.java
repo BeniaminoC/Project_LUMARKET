@@ -13,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -22,6 +23,7 @@ import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
@@ -64,7 +66,7 @@ public class controlador_admin implements Initializable {
     private TextField cash;
     @FXML
     private TextField stock;
-    
+    List<String> elecciones;
     private metodos_generales modelo;
     @FXML
     private Button Options;
@@ -76,6 +78,8 @@ public class controlador_admin implements Initializable {
     private ScrollPane contenedor;
     @FXML
     private VBox resultados;
+    @FXML
+    private ComboBox<String> categorias;
 
     /**
      * Initializes the controller class.
@@ -135,8 +139,19 @@ public class controlador_admin implements Initializable {
 
     @FXML
     private void crear(ActionEvent event) {
+        String categoriaSeleccionada = categorias.getEditor().getText().trim();
+
+    if (categoriaSeleccionada.isEmpty()) {
+        modelo.mostrarError("Debes ingresar o seleccionar una categoría.");
+        return;
+    }
+
+    if (!categorias.getItems().contains(categoriaSeleccionada)) {
+        categorias.getItems().add(categoriaSeleccionada);
+        modelo.agregarCategoria(categoriaSeleccionada);
+    }
         String id = modelo.generarIDUnico(modelo.obtenerIDsExistentes("src/Archivos/listaproductos.txt"), "producto");
-        producto nuevo= new producto(id, nombre.getText(),Float.parseFloat(cash.getText()),ruta.getText(),Integer.parseInt(stock.getText()),desc.getText());
+        producto nuevo= new producto(id, nombre.getText(),Float.parseFloat(cash.getText()),ruta.getText(),Integer.parseInt(stock.getText()),desc.getText(),categoriaSeleccionada);
         modelo.agregarSen(nuevo);
         modelo.guardarProducto(nuevo);
         exito();
@@ -144,6 +159,8 @@ public class controlador_admin implements Initializable {
     
     public void ModeloCompartido(metodos_generales modelo) {
     this.modelo = modelo;
+    elecciones = modelo.obtenerCategorias();
+    categorias.getItems().addAll(elecciones);
 }
     
     public void exito(){
@@ -245,5 +262,10 @@ private void ocultarResultados() {
     contenedor.setVisible(false);
     contenedor.setManaged(false);
 }   
+
+    @FXML
+    private void catalogo(ActionEvent event) {
+        modelo.cambioventana("/Vistas/vista_catalogo.fxml", event,this.modelo);
+    }
     
 }

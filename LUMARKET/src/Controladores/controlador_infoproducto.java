@@ -209,5 +209,10 @@ public class controlador_infoproducto implements Initializable {
         icono.setImage(new Image("/Imagenes/Iconos/nofavorito.png"));
     }
 }
+
+    @FXML
+    private void catalogo(ActionEvent event) {
+        modelo.cambioventana("/Vistas/vista_catalogo.fxml", event,this.modelo);
+    }
     
 }

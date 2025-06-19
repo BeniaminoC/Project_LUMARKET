@@ -16,12 +16,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 
-
 <BorderPane prefHeight="581.0" prefWidth="687.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.controlador_usuario">
    <center>
       <AnchorPane id="AnchorPane" prefHeight="449.0" prefWidth="577.0">
          <children>
-            <AnchorPane layoutY="-2.0" prefHeight="429.0" prefWidth="718.0">
+            <AnchorPane layoutY="-2.0" prefHeight="429.0" prefWidth="718.0" style="-fx-background-color: FAF7F3;">
                <children>
                   <Pane layoutX="14.0" layoutY="67.0" prefHeight="131.0" prefWidth="558.0" style="-fx-background-color: #808080;" />
                   <Pane layoutX="611.0" layoutY="67.0" prefHeight="131.0" prefWidth="55.0" style="-fx-background-color: #808080;" />
@@ -54,7 +53,7 @@
       </AnchorPane>
    </center>
    <bottom>
-      <Pane prefHeight="58.0" prefWidth="643.0" style="-fx-background-color: #D3A468;" BorderPane.alignment="CENTER" />
+      <Pane prefHeight="58.0" prefWidth="643.0" style="-fx-background-color: F3E8DB;" BorderPane.alignment="CENTER" />
    </bottom>
    <top>
       <AnchorPane BorderPane.alignment="CENTER">
@@ -71,8 +70,7 @@
                         <Image url="@../Imagenes/Iconos/corazon.png" />
                      </image>
                   </ImageView>
-               </graphic>
-            </Button>
+               </graphic></Button>
             <Button fx:id="Options" layoutX="465.0" layoutY="20.0" mnemonicParsing="false" onAction="#mostraropciones" prefHeight="15.0" prefWidth="119.0" style="-fx-background-color: transparent; -fx-background-radius: 25; -fx-border-color: #e19143; -fx-border-radius: 25;" text="   Usuario">
                <graphic>
                   <ImageView fitHeight="26.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
@@ -100,7 +98,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ed933a" height="28.0" layoutX="-16.0" layoutY="68.0" stroke="#ed933a" strokeType="INSIDE" width="747.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffbe58" height="28.0" layoutX="-16.0" layoutY="68.0" stroke="#ffbe58" strokeType="INSIDE" width="747.0" />
             <VBox layoutX="222.0" layoutY="-3.0" prefHeight="95.0" prefWidth="213.0">
                <children>
                   <StackPane prefHeight="87.0" prefWidth="213.0">
@@ -124,6 +122,15 @@
                   </ScrollPane>
                </children>
             </VBox>
+            <Button layoutX="673.0" layoutY="14.0" mnemonicParsing="false" onAction="#catalogo" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: transparent;">
+               <graphic>
+                  <ImageView fitHeight="41.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Imagenes/Iconos/catalogo.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children>
       </AnchorPane>
    </top>

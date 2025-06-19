@@ -16,6 +16,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -86,6 +87,8 @@ public class metodos_generales {
             ((controlador_historial) controlador).ModeloCompartido(modelo);
         }else if (controlador instanceof controlador_admin) {
             ((controlador_admin) controlador).ModeloCompartido(modelo);
+        }else if (controlador instanceof controlador_catalogo) {
+            ((controlador_catalogo) controlador).ModeloCompartido(modelo);
         }
         
         Scene scene = new Scene(root);
@@ -175,7 +178,7 @@ public class metodos_generales {
         BufferedWriter guardar = new BufferedWriter(new FileWriter("src/Archivos/listaproductos.txt", true));
             String desc = prod.descripcion.contains(",") ? "\"" + prod.descripcion + "\"" : prod.descripcion;
             String precio = (prod.precio % 1 == 0) ? String.valueOf((int) prod.precio) : String.valueOf(prod.precio);
-            guardar.write(prod.idp+","+prod.nombre+","+precio+","+prod.imagen+","+prod.cantidad+","+desc);
+            guardar.write(prod.idp+","+prod.nombre+","+precio+","+prod.imagen+","+prod.cantidad+","+desc+","+prod.categoria);
             guardar.newLine();
             guardar.close();
             
@@ -195,7 +198,7 @@ public class metodos_generales {
         String linea="";
         while ((linea=leer.readLine())!=null){
             String[] bloques = linea.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
-            if (bloques.length==6){
+            if (bloques.length==7){
             String id=bloques[0];
             String nombre=bloques[1];
             float precio=Float.parseFloat(bloques[2]);
@@ -205,7 +208,8 @@ public class metodos_generales {
             if (descripcion.startsWith("\"") && descripcion.endsWith("\"")) {
                 descripcion = descripcion.substring(1, descripcion.length() - 1);
             }
-            producto q=new producto(id,nombre, precio, imagen, cant,descripcion);
+            String categoria = bloques[6];
+            producto q=new producto(id,nombre, precio, imagen, cant,descripcion,categoria);
             agregarSen(q);
             System.out.println("Productos cargados: " + tamañoListaSen());
             }
@@ -404,7 +408,7 @@ public class metodos_generales {
         while ((linea = lector.readLine()) != null) {
             String[] campos = linea.split(",");
 
-            if (campos.length == 5 && campos[0].equals(idProducto)) {
+            if (campos.length == 7 && campos[0].equals(idProducto)) {
                 campos[4] = String.valueOf(nuevaCantidad);
                 linea = String.join(",", campos);
                 encontrado = true;
@@ -704,7 +708,7 @@ public class metodos_generales {
     
     public boolean Push(producto p){
         if(p!=null){
-            producto copia = new producto(p.idp,p.nombre,p.precio,p.imagen,0,p.descripcion);
+            producto copia = new producto(p.idp,p.nombre,p.precio,p.imagen,0,p.descripcion,p.categoria);
             Nodo_LS<producto> info = new Nodo_LS(copia);
             if(CarritoVacio()){
                 tope_c=info;
@@ -758,5 +762,95 @@ public class metodos_generales {
         tope_c=null;
         actual=null;
     }
+    
+    public List<String> obtenerCategorias() {
+    List<String> categorias = new ArrayList<>();
+    File archivo = new File("src/Archivos/categorias.txt");
+
+    if (archivo.exists()) {
+        try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                if (!linea.trim().isEmpty()) {
+                    categorias.add(linea.trim());
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    return categorias;
+}
+
+    public void agregarCategoria(String nueva) {
+    List<String> categorias = obtenerCategorias();
+
+    if (!categorias.contains(nueva)) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("src/Archivos/categorias.txt", true))) {
+            bw.write(nueva);
+            bw.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+    public void mostrarError(String mensaje) {
+    Alert alerta = new Alert(Alert.AlertType.ERROR);
+    alerta.setTitle("Error");
+    alerta.setHeaderText(null);
+    alerta.setContentText(mensaje);
+    alerta.showAndWait();
+}
+    
+    public List<producto> obtenerProductosComoLista() {
+    List<producto> lista = new ArrayList<>();
+    Nodo_LS<producto> aux = cab_s;
+    while (aux != null) {
+        lista.add(aux.dato);
+        aux = aux.sig;
+    }
+    return lista;
+}
+    
+    public List<producto> obtenerProductosFiltrados(String categoria, String orden) {
+    List<producto> lista = new ArrayList<>();
+    Nodo_LS<producto> aux = cab_s;
+    
+    while (aux != null) {
+        if (categoria.equals("Todos") || aux.dato.categoria.equals(categoria)) {
+            lista.add(aux.dato);
+        }
+        aux = aux.sig;
+    }
+
+    switch (orden) {
+        case "Menor precio":
+            lista.sort(Comparator.comparingDouble(p -> p.precio));
+            break;
+        case "Mayor precio":
+            lista.sort((p1, p2) -> Float.compare(p2.precio, p1.precio));
+            break;
+        case "A-Z":
+            lista.sort(Comparator.comparing(p -> p.nombre.toLowerCase()));
+            break;
+        case "Z-A":
+            lista.sort((p1, p2) -> p2.nombre.toLowerCase().compareTo(p1.nombre.toLowerCase()));
+            break;
+        case "Favoritos":
+            lista.sort((p1, p2) -> {
+                boolean f1 = estaEnFavoritos(p1.idp);
+                boolean f2 = estaEnFavoritos(p2.idp);
+                return Boolean.compare(!f1, !f2);
+            });
+            break;
+    }
+
+    return lista;
+}
+
+
+
+
     
 }

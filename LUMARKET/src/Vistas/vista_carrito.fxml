@@ -19,7 +19,7 @@
 
 <BorderPane prefHeight="581.0" prefWidth="687.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controladores.controlador_carrito">
    <center>
-      <AnchorPane id="AnchorPane" prefHeight="449.0" prefWidth="577.0">
+      <AnchorPane id="AnchorPane" prefHeight="449.0" prefWidth="577.0" style="-fx-background-color: FAF7F3;">
          <children>
             <Label layoutX="39.0" layoutY="21.0" />
             <HBox layoutX="70.0" layoutY="27.0" prefHeight="21.0" prefWidth="276.0" spacing="30.0">
@@ -43,7 +43,7 @@
             </HBox>
             <ScrollPane fitToWidth="true" layoutX="45.0" layoutY="68.0" prefHeight="319.0" prefWidth="423.0" style="-fx-border-color: transparent;">
                <content>
-                  <VBox fx:id="llenarcarrito" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="309.0" prefWidth="415.0" />
+                  <VBox fx:id="llenarcarrito" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="309.0" prefWidth="415.0" style="-fx-background-color: ffffff;" />
                </content>
             </ScrollPane>
             <AnchorPane layoutX="488.0" layoutY="89.0" prefHeight="143.0" prefWidth="200.0">
@@ -60,14 +60,14 @@
                         <Label prefHeight="17.0" prefWidth="67.0" text="Descuento" StackPane.alignment="CENTER_LEFT" />
                      </children>
                   </StackPane>
-                  <Button fx:id="hacerpago" layoutX="12.0" layoutY="92.0" mnemonicParsing="false" onAction="#abrirformulario" prefHeight="31.0" prefWidth="175.0" style="-fx-background-color: #ed933a;" text="Continuar pago" textFill="WHITE" />
+                  <Button fx:id="hacerpago" layoutX="12.0" layoutY="92.0" mnemonicParsing="false" onAction="#abrirformulario" prefHeight="31.0" prefWidth="175.0" style="-fx-background-color: FFBE58;" text="Continuar pago" textFill="WHITE" />
                </children>
             </AnchorPane>
-            <Button layoutX="497.0" layoutY="68.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="114.0" style="-fx-background-color: #ed933a;" text="Resumen compra" textFill="WHITE" />
+            <Button layoutX="497.0" layoutY="68.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="114.0" style="-fx-background-color: FFBE58;" text="Resumen compra" textFill="WHITE" />
          </children></AnchorPane>
    </center>
    <bottom>
-      <Pane prefHeight="58.0" prefWidth="643.0" style="-fx-background-color: #D3A468;" BorderPane.alignment="CENTER" />
+      <Pane prefHeight="58.0" prefWidth="643.0" style="-fx-background-color: F3E8DB;" BorderPane.alignment="CENTER" />
    </bottom>
    <top>
       <AnchorPane BorderPane.alignment="CENTER">
@@ -110,7 +110,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ed933a" height="28.0" layoutX="-16.0" layoutY="68.0" stroke="#ed933a" strokeType="INSIDE" width="747.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffbe58" height="28.0" layoutX="-16.0" layoutY="68.0" stroke="#ffbe58" strokeType="INSIDE" width="747.0" />
                   <Button layoutY="2.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#inicio" prefHeight="72.0" prefWidth="153.0" style="-fx-background-color: transparent;">
                      <graphic>
                         <ImageView fitHeight="72.0" fitWidth="153.0" pickOnBounds="true" preserveRatio="true">
@@ -145,6 +145,15 @@
                   </ScrollPane>
                </children>
             </VBox>
+            <Button layoutX="673.0" layoutY="14.0" mnemonicParsing="false" onAction="#catalogo" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: transparent;">
+               <graphic>
+                  <ImageView fitHeight="41.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Imagenes/Iconos/catalogo.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children>
       </AnchorPane>
    </top>
