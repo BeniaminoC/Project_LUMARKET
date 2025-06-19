@@ -60,6 +60,10 @@ public class controlador_infoproducto implements Initializable {
     private ContextMenu H;
     @FXML
     private Button Options;
+    @FXML
+    private ImageView icono;
+    @FXML
+    private Button botonfav;
 
     /**
      * Initializes the controller class.
@@ -87,6 +91,7 @@ public class controlador_infoproducto implements Initializable {
             cant.setDisable(true);
         }
         description.setText(data.descripcion);
+        actualizarEstadoFavorito();
     }
 
     @FXML
@@ -131,7 +136,11 @@ public class controlador_infoproducto implements Initializable {
 
     @FXML
     private void inicio(ActionEvent event) {
+        if(modelo.actual!=null){
         modelo.cambioventana("/Vistas/vista_usuario.fxml", event, this.modelo);
+        }else{
+            modelo.cambioventana("/Vistas/vista_principal.fxml", event, this.modelo);
+        }
     }
 
         @FXML
@@ -182,6 +191,23 @@ public class controlador_infoproducto implements Initializable {
 
     @FXML
     private void abrircarrito(ActionEvent event) {
+        modelo.cambioventana("/Vistas/vista_carrito.fxml", event,this.modelo);
     }
+
+    @FXML
+    private void estado(ActionEvent event) {
+        if(modelo.actual!=null){
+            modelo.toggleFavorito(data);
+            actualizarEstadoFavorito();
+        }
+    }
+    
+    private void actualizarEstadoFavorito() {
+    if (modelo.estaEnFavoritos(data.idp)) {
+        icono.setImage(new Image("/Imagenes/Iconos/favorito.png"));
+    } else {
+        icono.setImage(new Image("/Imagenes/Iconos/nofavorito.png"));
+    }
+}
     
 }

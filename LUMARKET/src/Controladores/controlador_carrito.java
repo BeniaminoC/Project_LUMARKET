@@ -15,13 +15,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Side;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -45,6 +49,12 @@ public class controlador_carrito implements Initializable {
     private Button Options;
     @FXML
     private ContextMenu H;
+    @FXML
+    private TextField busqueda;
+    @FXML
+    private ScrollPane contenedor;
+    @FXML
+    private VBox resultados;
 
     /**
      * Initializes the controller class.
@@ -52,7 +62,14 @@ public class controlador_carrito implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+        busqueda.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal.trim().isEmpty()) {
+                mostrarResultados(newVal.trim());
+            } else {
+                ocultarResultados();
+            }
+        });
+    }   
 
     @FXML
     private void abrirformulario(ActionEvent event) throws IOException {
@@ -174,6 +191,56 @@ public class controlador_carrito implements Initializable {
     private void inicio(ActionEvent event) {
         modelo.cambioventana("/Vistas/vista_usuario.fxml", event, this.modelo);
     }
+
+    @FXML
+    private void buscarcatalogo(KeyEvent event) {
+    String texto = busqueda.getText().toLowerCase();
+    resultados.getChildren().clear();
+
+    Nodo_LS<producto> aux = modelo.cab_s;
+    while (aux != null) {
+        producto p = aux.dato;
+        if (p.nombre.toLowerCase().contains(texto)) {
+            Label resultado = new Label(p.nombre);
+            resultado.setStyle("-fx-padding: 5; -fx-font-size: 14px;");
+            resultados.getChildren().add(resultado);
+        }
+        aux = aux.sig;
+    }
+    }
+
+    private void mostrarResultados(String texto) {
+    resultados.getChildren().clear();
+    boolean coincidencia= false;
+
+    Nodo_LS <producto> existencias = modelo.cab_s;
+    while (existencias!=null) {
+        if (existencias.dato.nombre.toLowerCase().contains(texto.toLowerCase())) {
+            coincidencia=true;
+            Label item = new Label(existencias.dato.nombre);
+            item.wrapTextProperty();
+            item.setStyle("-fx-cursor: hand; -fx-background-color: #f0f0f0; -fx-padding: 5;");
+            producto prod = modelo.buscarProductoPorID(existencias.dato.idp);
+            item.setOnMouseClicked(e -> {
+                modelo.datosProducto("/Vistas/vista_infoproducto.fxml", prod,modelo);
+                Stage ventanaActual = (Stage) ((Node) e.getSource()).getScene().getWindow();
+                ventanaActual.close();
+            });
+            resultados.getChildren().add(item);
+        }
+        
+        existencias=existencias.sig;
+    }
+
+    contenedor.setVisible(coincidencia);
+    contenedor.setManaged(coincidencia);
+}
+
+private void ocultarResultados() {
+    resultados.getChildren().clear();
+    contenedor.setVisible(false);
+    contenedor.setManaged(false);
+}   
 
     
 }

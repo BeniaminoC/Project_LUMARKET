@@ -274,7 +274,6 @@ public class metodos_generales {
 }
         
 
-    
     public void datosProducto(String direccion, producto prodSelected, metodos_generales modelo) {
     try {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(direccion));
@@ -289,7 +288,6 @@ public class metodos_generales {
         e.printStackTrace();
     }
 }
-    
     public void datosCarrito(String direccion, producto prodSelected, metodos_generales modelo) {
     try {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(direccion));
@@ -564,8 +562,74 @@ public class metodos_generales {
     
     return false;
 }
+    
+    public boolean estaEnFavoritos(String idProd) {
+    Nodo_LD<producto> aux = cab_f;
+    while (aux != null) {
+        if (aux.dato.idp.equals(idProd)) return true;
+        aux = aux.sig;
+    }
+    return false;
+}
+    
+    public void guardarFavoritosEnArchivo() {
+    File archivo = new File("src/Archivos/listafavoritos.txt");
+    List<String> nuevasLineas = new ArrayList<>();
 
-  
+    try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
+        String linea;
+        boolean encontrado = false;
+
+        while ((linea = br.readLine()) != null) {
+            if (linea.startsWith(actual.idu + ":")) {
+                StringBuilder nuevaLinea = new StringBuilder(actual.idu + ":");
+                Nodo_LD<producto> aux = cab_f;
+                while (aux != null) {
+                    nuevaLinea.append(aux.dato.idp);
+                    if (aux.sig != null) nuevaLinea.append(",");
+                    aux = aux.sig;
+                }
+                nuevasLineas.add(nuevaLinea.toString());
+                encontrado = true;
+            } else {
+                nuevasLineas.add(linea);
+            }
+        }
+
+        if (!encontrado) {
+            StringBuilder nuevaLinea = new StringBuilder(actual.idu + ":");
+            Nodo_LD<producto> aux = cab_f;
+            while (aux != null) {
+                nuevaLinea.append(aux.dato.idp);
+                if (aux.sig != null) nuevaLinea.append(",");
+                aux = aux.sig;
+            }
+            nuevasLineas.add(nuevaLinea.toString());
+        }
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo))) {
+            for (String l : nuevasLineas) {
+                bw.write(l);
+                bw.newLine();
+            }
+        }
+
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+
+    
+    public void toggleFavorito(producto prod) {
+    if (estaEnFavoritos(prod.idp)) {
+        eliminarfavorito(prod.idp);
+    } else {
+        AñadirInicio(prod);
+    }
+    guardarFavoritosEnArchivo();
+}
+
+    
     public void compraunitaria(historial h){
         try{
         BufferedWriter guardar = new BufferedWriter(new FileWriter("src/Archivos/historiales.txt", true));

@@ -71,8 +71,17 @@
                         </VBox>
                      </content>
                   </ScrollPane>
-                  <VBox alignment="CENTER" prefHeight="321.0" prefWidth="197.0" spacing="10.0">
+                  <VBox alignment="TOP_CENTER" prefHeight="321.0" prefWidth="197.0" spacing="10.0">
                      <children>
+                        <Button fx:id="botonfav" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#estado" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: transparent;">
+                           <graphic>
+                              <ImageView fx:id="icono" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../Imagenes/Iconos/nofavorito.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
                         <StackPane prefHeight="23.0" prefWidth="127.0">
                            <children>
                               <Label text="Stock disponible:" StackPane.alignment="CENTER_LEFT" />
